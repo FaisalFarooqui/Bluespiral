@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "UploadFiles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>UploadFiles</h2>
+@using (Html.BeginForm("UploadFiles", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <input type="file" multiple name="files" value="Browse" />
+    <br />
+    <input type="submit" value="Upload" />
+    if (ViewBag.UploadSuccess == true)
+    {
+        <span>Upload Completed Successfully</span>
+    }
+
+}

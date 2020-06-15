@@ -1,0 +1,72 @@
+﻿@model BlueSpiral.Core.ViewModel.UsersViewModel
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
+    <div id="myprofile" class="tabcontent" style="display: block;">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <h4>Profile</h4>
+        <hr class="padding-bottom-1x">
+        @using (Html.BeginForm("Profile", "ShopOwner", FormMethod.Post, new { role = "form", @class = "row p-1", enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn">Name</label>
+                    @Html.TextBoxFor(m => m.FName, new { @class = "form-control", @placeholder = "First Name" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-email">E-mail Address</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Last Name" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-phone">Phone Number</label>
+                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @placeholder = "Contact Number" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>GST No.</label>
+                    @Html.TextBoxFor(m => m.GSTNo, new { @class = "form-control", @placeholder = "GST No." })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-pass">New Password</label>
+                    @Html.TextBoxFor(m => m.Pswd, new { @class = "form-control", @placeholder = "Password" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-confirm-pass">Confirm Password</label>
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <input type="file" name="ImageFile" class="file" required />
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 padding-bottom-1x">
+                <hr class="mt-2 mb-3">
+                <div class="text-right">
+                    <button class="btn btn-primary margin-right-none" type="submit">Update Profile</button>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

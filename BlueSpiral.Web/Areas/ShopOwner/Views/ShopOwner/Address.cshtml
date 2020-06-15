@@ -1,0 +1,64 @@
+﻿@model BlueSpiral.Core.ViewModel.UsersViewModel
+@{
+    ViewBag.Title = "Address";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
+    <div id="address" class="tabcontent" style="display: block;">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <h4>Contact Address</h4>
+        <hr class="padding-bottom-1x">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @using (Html.BeginForm("Address", "ShopOwner", FormMethod.Post, new { @class = "row", role = "form", @id = "buyer", enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-company">Shop Name</label>
+                    @Html.TextBoxFor(m => m.BusinessName, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.BusinessName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>State</label>
+                    @Html.DropDownListFor(m => m.StateId, ViewBag.State as SelectList, "Choose State", new { @class = "form-control", @id = "StateId", @onchange = "StateWiseCity()" })
+                    @Html.ValidationMessageFor(model => model.StateId, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>City</label>
+                    @Html.DropDownListFor(m => m.CityId, ViewBag.City as SelectList, "Choose City", new { @class = "form-control", @id = "City" })
+                    @Html.ValidationMessageFor(model => model.CityId, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-zip">Pin Code</label>
+                    @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.Pincode, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-address1">Address</label>
+                    @Html.TextBoxFor(m => m.ContactAddress, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.ContactAddress, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-address2">Alternative Address</label>
+                    <input class="form-control" type="text" id="account-address2">
+                </div>
+            </div>
+            <div class="col-12 padding-top-1x">
+                <hr class="margin-top-1x margin-bottom-1x">
+                <div class="text-right">
+                    <button class="btn btn-primary margin-bottom-none" type="submit">Update Address</button>
+                </div>
+            </div>
+        }
+    </div>
+    </div>
+    @Scripts.Render("~/register/js");

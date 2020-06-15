@@ -1,0 +1,217 @@
+﻿@model BlueSpiral.Web.Areas.ControlPanel.Models.ProductViewModel
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<div id="order" class="tabcontent" style="display: block;">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Order</h4>
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <div class="table-responsive">
+        @if (TempData["msg"] != null)
+        {
+            <span style="color:forestgreen">Upload Completed Successfully</span>
+        }
+        <table class="table table-hover margin-bottom-none">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+
+                    <th>Description</th>
+                    <th>Status</th>
+                    @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                    {
+                        <th>Action</th>
+                    }
+                    </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.ProductList != null)
+                {
+                    foreach (var item in ViewBag.ProductList)
+                    {
+                <tr>
+                    <td><a href="/ControlPanel/ControlPanel/EditProduct" onclick="document.getElementById('id01').style.display='block'">@item.product_name</a></td>
+                    <td>@item.HandicraftCategory</td>
+                    <td>@item.HandicraftSubCategory</td>
+
+                    <td>@item.product_description</td>
+                    <td><a class="btn btn-primary btn-sm" href="#"><span>Active</span></a></td>
+                    @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                    {
+                        <td>
+                            <i class="fa fa-trash action-icon mr-1"></i>
+                            <i class="fa fa-edit action-icon mr-1"></i>
+
+                            <a href="/ControlPanel/ControlPanel/UploadFiles" class="elements"><i class="fa fa-shopping-basket action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Water Mark Image"></i></a>
+
+                            <a href="/ControlPanel/ControlPanel/UploadFiles" class="elements"><i class="fa fa-shopping-basket action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Orignal Image"></i></a>
+
+                        </td>
+                    }
+                    </tr>
+
+                    }
+                }
+
+                    </tbody>
+        </table>
+
+
+    </div>
+
+    <hr>
+    @*<div class="text-right"><a class="btn btn-link-primary margin-bottom-none" data-toggle="modal" data-target="#openTicket"><i class="icon-download"></i>&nbsp;Add New Product</a></div>*@
+</div>
+@if (Convert.ToInt32(Session["UserTypeId"])!=1)
+{
+<div class="text-right">
+    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-link-primary margin-bottom-none">Add New Product</button>
+</div>
+}
+
+@*@using(Html.BeginForm("Product","ControlPanel", FormMethod.Post))
+    {*@
+@*<form name="frm" method="post">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add a Product</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ticket-subject">Category</label>
+
+                        <input class="form-control" type="text" id="HandicraftCategory" required="">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" id="save">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>*@
+@*}*@
+@Html.ValidationSummary("", new { @class = "text-danger" })
+@using (Html.BeginForm("Product", "ControlPanel", FormMethod.Post, new { role = "form" }))
+{
+
+    <div class="w3-container">
+
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <div class="w3-center">
+                    <br>
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close">&times;</span>
+                </div>
+
+                <form class="w3-container">
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Category Name</label>
+                                @Html.DropDownListFor(m => m.HandicraftCategoryId, ViewBag.Category as SelectList, "Choose Category", new { @class = "form-control", @id = "HandicraftCategoryId", @onchange = "CategoryWiseSubCategory()" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Sub Category Name</label>
+                                @Html.DropDownListFor(m => m.HandicraftSubCategoryId, new SelectList(Enumerable.Empty<SelectListItem>(), "HandicraftSubCategoryId", "HandicraftSubCategory"), "Choose SubCategory", new { @class = "form-control", @id = "SubCategory" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="account-fn">Product Name</label>
+                                @Html.TextBoxFor(m => m.product_name, new { @class = "form-control", @placeholder = "Product Name" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="account-fn">Product Description</label>
+                                @Html.TextBoxFor(m => m.product_description, new { @class = "form-control", @placeholder = "Product Description" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn">Size</label>
+                                @Html.TextBoxFor(m => m.product_size, new { @class = "form-control", @placeholder = "Size" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn">Color</label>
+                                @Html.DropDownListFor(m => m.product_colour, ViewBag.Colour as SelectList, "Choose Colour", new { @class = "form-control", @id = "product_colour",  })
+                              
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Price for Defence</label>
+                                @Html.TextBoxFor(m => m.price_defence, new { @class = "form-control", @placeholder = "Price for Defence",@type= "number" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Price for Shopkeeper</label>
+                                @Html.TextBoxFor(m => m.price_shopkeeper, new { @class = "form-control", @placeholder = "Price for Shopkeeper", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> MOQ for Defence</label>
+                                @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Defence", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> MOQ for Shopkeeper</label>
+                                @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Shopkeeper", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Discount</label>
+                                @Html.TextBoxFor(m => m.discount, new { @class = "form-control", @placeholder = "Discount", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn"> Total In Stock</label>
+                                @Html.TextBoxFor(m => m.product_stock, new { @class = "form-control", @placeholder = "Total In Stock", @type = "number" })
+                            </div>
+                        </div>
+                        <div class="col-12 padding-bottom-1x">
+                            <hr class="mt-2 mb-3">
+                            <div class="text-right">
+                                <button class="btn btn-primary margin-right-none" type="submit">Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                    @*<button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>*@
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+
+@Scripts.Render("~/register/js");

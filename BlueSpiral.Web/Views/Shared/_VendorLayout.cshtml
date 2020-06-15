@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The Blue Spiral</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="BlueSpiral - Universal E-Commerce Template">
+    <meta name="keywords" content="shop, e-commerce, modern, flat style, responsive, online store, business, mobile, blog, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Rokaux">
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @*<link rel="stylesheet" media="screen" href="css/vendor.min.css">*@
+    <!-- Main Template Styles-->
+    @*<link id="mainStyles" rel="stylesheet" media="screen" href="css/styles.min.css">*@
+    @Styles.Render("~/Content/cssStyle")
+  
+
+    <!-- Customizer Styles-->
+    @*<link rel="stylesheet" media="screen" href="customizer/customizer.min.css">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Google Tag Manager-->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '../../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-T4DJFPZ');
+    </script>
+    <!-- Modernizr-->
+    @*<script src="js/modernizr.min.js"></script>*@
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<!--Body-->
+<body>
+    <!--Template Customizer-- >
+    <div class="customizer-backdrop"></div>
+    <!-- Off-Canvas Category Menu-->
+   
+
+    <!--Topbar-->
+    <!--Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
+    <header class="navbar navbar-sticky">
+        <!-- Search-->
+        <form class="site-search" method="get">
+            <input type = "text" name="site_search" placeholder="Type to search...">
+            <div class="search-tools"><span class="clear-search">Clear</span><span class="close-search"><i class="icon-cross"></i></span></div>
+        </form>
+        <div class="site-branding">
+            <div class="inner">
+                <!-- Off-Canvas Toggle(#shop-categories)--><a class="offcanvas-toggle cats-toggle" href="#shop-categories" data-toggle="offcanvas"></a>
+                <!-- Off-Canvas Toggle (#mobile-menu)--><a class="offcanvas-toggle menu-toggle" href="#mobile-menu" data-toggle="offcanvas"></a>
+                <!-- Site Logo--><a class="site-logo" href="index.html"><img src = "../../Content/img/logo/logo-new.png" alt="TheBlueSpiral"></a>
+            </div>
+        </div>
+        <!-- Main Navigation-->
+        <!-- Toolbar-->
+        <div class="toolbar">
+            <div class="inner">
+                <div class="tools">
+                    <div class="search" style="display:none;"><i class="icon-search"></i></div>
+                    <div class="cart notify" style="display:none;">
+                        <a href = "#" ></a ><i class="icon-bell"></i><span class="count">1</span>
+                        <div class="toolbar-dropdown notify-drop">
+                            <h6> Notification</h6>
+                            <div class="dropdown-product-item">
+                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src = "../../Content/img/cart-dropdown/01.jpg" alt="Product"></a>
+                                <div class="dropdown-product-info">
+                                    <a class="dropdown-product-title" href="#">Unionbay Park</a>
+                                    <p class="para-deliver"> Your package containing MSTAR4 has been Delivered.Thanks for shopping !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account" >
+                        <a href = "#" ></a ><i class="icon-head"></i>
+                        <ul class="toolbar-dropdown">
+                            <li class="sub-menu-user">
+                                <div class="user-ava">
+                                    <img src = "@Session["PhotoUrl"].ToString()" alt="name">
+                                </div>
+                                <div class="user-info">
+                                    <h6 class="text-dark">@Session["Name"].ToString()</h6>
+                                </div>
+                            </li>
+                            <li class="sub-menu-separator"></li>
+                            <li> @Html.ActionLink("Logout", "Logout", "Supplier")</li>
+                        </ul>
+                    </div>
+                    <div class="cart" style="display:none;">
+                        <a href = "cart.html" ></a ><i class="icon-bag"></i><span class="count">3</span><!-- <span class="subtotal">Rs-289.68</span> -->
+                        <div class="toolbar-dropdown">
+                            <div class="dropdown-product-item">
+                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src = "../../Content/img/cart-dropdown/01.jpg" alt="Product"></a>
+                                <div class="dropdown-product-info"><a class="dropdown-product-title" href="shop-single.html">Unionbay Park</a><span class="dropdown-product-details">1 x Rs-43.90</span></div>
+                            </div>
+                            <div class="dropdown-product-item">
+                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src = "../../Content/img/cart-dropdown/02.jpg" alt="Product"></a>
+                                <div class="dropdown-product-info"><a class="dropdown-product-title" href="shop-single.html">Daily Fabric Cap</a><span class="dropdown-product-details">2 x Rs-24.89</span></div>
+                            </div>
+                            <div class="dropdown-product-item">
+                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src = "../../Content/img/cart-dropdown/03.jpg" alt="Product"></a>
+                                <div class="dropdown-product-info"><a class="dropdown-product-title" href="shop-single.html">Haan Crossbody</a><span class="dropdown-product-details">1 x Rs-200.00</span></div>
+                            </div>
+                            <div class="toolbar-dropdown-group">
+                                <div class="column"><span class="text-lg">Total:</span></div>
+                                <div class="column text-right"><span class="text-lg text-medium">Rs-289.68&nbsp;</span></div>
+                            </div>
+                            <div class="toolbar-dropdown-group">
+                                <div class="column"><a class="btn btn-sm btn-block btn-secondary" href="cart.html">View Cart</a></div>
+                                <div class="column"><a class="btn btn-sm btn-block btn-success" href="checkout-address.html">Checkout</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Off-Canvas Wrapper-->
+    <!-- Off-Canvas Wrapper-->
+    <div class="offcanvas-wrapper">
+        <!-- Page Content-->
+
+        <section class="col-sm-12" style="background: #f2edf3;">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-4 p-0">
+                    <div class="tab-profile" >
+                        <div class="text-center">
+                            <img src="@Session["PhotoUrl"].ToString()" class="profile-pic tab-imgs mt-4 mb-2">
+                            <p class="user-name text-center">@Session["Name"].ToString()</p>
+                        </div>
+                        <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> @Html.ActionLink("Dashboard", "Welcome", "Supplier", new { @class="text-white" ,}) </button>
+                        <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> @Html.ActionLink("Request Product", "Product", "ControlPanel", new { @class = "text-white", }) </button>
+                        <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> Invetory Stock </button>
+                        <button class="tablinks mb-4"><i class="icon-map pro-icon mr-2"></i>  @Html.ActionLink("Logout", "Logout", "Supplier", new { @class = "text-white", })  </button>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
+                    <h4 class="mb-4">My Account</h4>
+                    @RenderBody()
+                    
+                   
+
+                </div>
+            </div>
+        </section>
+
+
+          
+        <!-- Site Footer-->
+        <section>
+            <img src = "../../Content/img/footup.jpg" class="img-fluid">
+        </section>
+        <footer class="site-footer">
+            <div class="container" style="padding-bottom: 30px;">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <!-- About Us-->
+                        <section class="widget widget-links widget-light-skin">
+                            <h3>
+                                <img src = "../../Content/img/logo/logo-new.png" class="footer-log">
+                            </h3>
+                            <p class="text-white text-justify">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                            </p>
+                        </section>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <!-- Account / Shipping Info-->
+                        <section class="widget widget-links widget-light-skin">
+                            <h3 class="widget-title">Account &amp; Shipping Info</h3>
+                            <ul>
+                                <li><a href = "#" > Your Account</a></li>
+                                <li><a href = "#" > Shipping Address</a></li>
+                                <li><a href = "#" > Refunds & Replacements </a ></li >
+                                <li ><a href= "#" > Delivery Info</a></li>
+                                <li><a href = "#" > Help Center</a></li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <!-- Contact Info-->
+                        <section class="widget widget-light-skin">
+                            <h3 class="widget-title">Get In Touch With Us</h3>
+                            <!-- <p class="text-white">Mobile: 7558276680 </p> -->
+                            <ul class="list-unstyled text-sm text-white">
+                                <li><span class="opacity-mon">Monday-Friday:</span>9.00 am - 8.00 pm</li>
+                                <li><span class="opacity-mon">Saturday:</span>10.00 am - 6.00 pm</li>
+                            </ul>
+                            <p><a class="navi-link-light" href="#">support@thebluespiral.com</a></p>
+                            <a class="social-button shape-circle sb-facebook sb-light-skin" href="#">
+                                <i class="socicon-facebook"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-twitter sb-light-skin" href="#">
+                                <i class="socicon-twitter"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-instagram sb-light-skin" href="#">
+                                <i class="socicon-instagram"></i>
+                            </a>
+                            <a class="social-button shape-circle sb-whatsapp sb-light-skin" href="#">
+                                <i class="socicon-whatsapp"></i>
+                            </a>
+                        </section>
+                    </div>
+
+
+                </div>
+                <!-- Copyright-->
+            </div>
+            <div class="container-fluid" style="background: #020202">
+                <div class="col-sm-12 text-center">
+                    <p class="footer-copyright">© All rights reserved.Made with &nbsp;<i class="icon-heart text-danger"></i><a href = "http://rokaux.com/" target="_blank"> &nbsp;by Flyaway</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Open Ticket Modal-->
+    <div class="modal fade" id="orderDetails" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Order No  - 34VB5540K83</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive shopping-cart mb-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th class="text-center">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src = "../../Content/img/shop/cart/01.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href = "shop-single.html" > Unionbay Park<small> x 1</small></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-43.90</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src = "../../Content/img/shop/cart/02.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href = "shop-single.html" > Daily Fabric Cap<small>x 2</small></a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
+                                                </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-24.89</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src = "../../Content/img/shop/cart/03.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href = "shop-single.html" > Cole Haan Crossbody<small>x 1</small></a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
+                                                </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-200.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
+                        <div class="px-2 py-1">Subtotal: <span class='text-medium'>Rs-289.68</span></div>
+                        <div class="px-2 py-1">Shipping: <span class='text-medium'>Rs-22.50</span></div>
+                        <div class="px-2 py-1">Tax: <span class='text-medium'>Rs-3.42</span></div>
+                        <div class="text-lg px-2 py-1">Total: <span class='text-medium'>Rs-315.60</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Close Ticket Modal-->
+    <!-- Open PAyment Modal-->
+    <form class="modal fade" method="post" id="openTicket" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add new detail</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ticket-subject">Card Name</label>
+                        <input class="form-control" type="text" id="ticket-subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticket-description">Description</label>
+                        <textarea class="form-control" id="ticket-description" rows="8" required></textarea>
+                    </div>
+                    <div class="custom-file mb-3">
+                        <input class="custom-file-input" type="file" id="file-input">
+                        <label class="custom-file-label" for="file-input">Choose file...</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Back To Top Button--><a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
+    <!-- Backdrop-->
+    <div class="site-backdrop"></div>
+    <!-- JavaScript(jQuery) libraries, plugins and custom scripts-->
+    @*<script src="js/vendor.min.js"></script>
+    <script src="js/scripts.min.js"></script>*@
+    @Scripts.Render("~/bundles/javaScripts")
+    <!-- Customizer scripts-->
+    @*<script src="customizer/customizer.min.js"></script>*@
+    @Scripts.Render("~/bundles/customizer")
+    <script type="text/javascript">
+        $(document).on('click', '.browse', function(){
+          var file = $(this).parent().parent().parent().find('.file');
+          file.trigger('click');
+        });
+        $(document).on('change', '.file', function(){
+          $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        });
+    </script>
+    <script type="text/javascript">
+      function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      document.getElementById("defaultOpen").click();
+    </script>
+
+</body>
+</html>

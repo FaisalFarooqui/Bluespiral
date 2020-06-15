@@ -1,0 +1,77 @@
+﻿@model BlueSpiral.Web.Areas.ShopOwner.Models.SubCategoryViewModel
+@{
+    ViewBag.Title = "SubCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Category</h4>
+    <hr class="padding-bottom-1x">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @using (Html.BeginForm("SubCategory", "ControlPanel", FormMethod.Post, new { role = "form" }))
+    {
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="account-fn"> Category Name</label>
+                @Html.DropDownListFor(m => m.HandicraftCategoryId, ViewBag.Category as SelectList, "Choose Handicraft Category", new { @class = "form-control", @id = "HandicraftCategoryId" })
+                @Html.ValidationMessageFor(model => model.HandicraftCategoryId, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="account-fn"> Sub Category Name</label>
+                @Html.TextBoxFor(m => m.HandicraftSubCategory, new { @class = "form-control", @placeholder = "Sub Category Name" })
+            </div>
+        </div>
+        <div class="col-12 padding-bottom-1x">
+            <hr class="mt-2 mb-3">
+            <div class="text-right">
+                <button class="btn btn-primary margin-right-none" type="submit">Submit</button>
+            </div>
+        </div>
+    }
+</div>
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Sub Caregory List</h4>
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <div class="table-responsive">
+        <table class="table table-hover margin-bottom-none">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Category</th>
+                    <th>SubCategory</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.SubCategory != null)
+                {
+                    foreach (var item in ViewBag.SubCategory)
+                    {
+                <tr>
+                    <td><a class="text-medium navi-link">1</a></td>
+                    <td>@item.HandicraftCategory</td>
+                    <td>@item.HandicraftSubCategory</td>
+                    <td>
+                        <a href="/ControlPanel/ControlPanel/RemoveSubCategory/@item.HandicraftSubCategoryId">   <i class="fa fa-trash action-icon mr-1"></i> </a>
+                          
+                            <i class="fa fa-edit action-icon mr-1"></i>
+                      
+</td>
+                    @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
+                </tr>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Sub Category List</a></div>
+</div>
+
+

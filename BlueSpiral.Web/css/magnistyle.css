@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+/*
+.wrapper {
+    min-height: 100vh;
+}
+*/
+.block__pic {
+    width: 300px;
+}
+
+.block__title {
+    margin-bottom: 30px;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+}

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Cat";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Category</h4>
+    <hr class="padding-bottom-1x">
+
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="account-fn"> Category Name</label>
+            <input class="form-control" />
+        </div>
+    </div>
+
+    <div class="col-12 padding-bottom-1x">
+        <hr class="mt-2 mb-3">
+        <div class="text-right">
+            <button class="btn btn-primary margin-right-none" type="submit">Submit</button>
+        </div>
+    </div>
+
+</div>
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Caregory List</h4>
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <div class="table-responsive">
+        <table class="table table-hover margin-bottom-none">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Caregory</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td><a class="text-medium navi-link">1</a></td>
+                    <td>HandicraftCategory</td>
+
+                    <td>
+                        <a href="#"><i class="fa fa-trash action-icon mr-1">Somthing</i>  </a>
+
+
+
+                    </td>
+                </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Category List</a></div>
+</div>
+

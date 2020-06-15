@@ -1,0 +1,63 @@
+﻿@model BlueSpiral.Core.ViewModel.VendorApplViewModel
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="col-md-7 col-sm-10 pt-5 pb-5">
+            <div class="blue-login" id="register-hide">
+                <div class="padding-top-3x hidden-md-up"></div>
+                <h4 class="margin-bottom-1x text-white mt-3">No Account? Register</h4>
+                <p>Registration takes less than a minute but gives you full control over your orders.</p>
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @using (Html.BeginForm("VendorApplication", "Account", FormMethod.Post, new { @class = "row", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @onblur = "checkEmail()", @id = "emailid" })
+                            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ContactNo)
+                            @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @type = "text" })
+                            @Html.ValidationMessageFor(model => model.ContactNo, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                  
+                    <div class="col-sm-12">
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="agreement">
+                                <label class="custom-control-label" for="agreement">Agreement with the TnC</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <input class="btn btn-primary margin-bottom-none mod-btn" type="submit" value="Apply" />
+                    </div>
+                }
+            </div>
+
+            <h6 class="mt-3 text-center already-regis">Already Registered? <span id="login-button" style="color: #f39c12; cursor: pointer;">@Html.ActionLink("Login here", "login", "Account")</span></h6>
+            <h6 class="mt-3 text-center"><span id="back-bttn" style="color: #f39c12; cursor: pointer; display: none;">Back</span></h6>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/register/js");
+
+
+
+
+

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title.</title>
+    <meta name="description" content="BlueSpiral - Universal E-Commerce Template">
+    <meta name="keywords" content="shop, e-commerce, modern, flat style, responsive, online store, business, mobile, blog, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    @*<link rel="stylesheet" media="screen" href="css/vendor.min.css">*@
+    <!-- Main Template Styles-->
+    @*<link id="mainStyles" rel="stylesheet" media="screen" href="css/styles.min.css">*@
+    <!-- Customizer Styles-->
+    @*<link rel="stylesheet" media="screen" href="customizer/customizer.min.css">*@
+
+    @Styles.Render("~/Content/cssStyle")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Modernizr-->
+    @*<script src="js/modernizr.min.js"></script>*@
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/js")
+     
+    }
+
+    </head>
+<body>
+
+        @RenderBody()
+
+
+    <!--JavaScript(jQuery) libraries, plugins and custom scripts-->
+    @Scripts.Render("~/bundles/javaScripts")
+    
+    <!-- Customizer scripts-->
+    @Scripts.Render("~/bundles/customizer")
+
+    <!--Vaidation Scripts -->
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+
+        $(document).on('click', '.browse', function () {
+            var file = $(this).parent().parent().parent().find('.file');
+            file.trigger('click');
+        });
+        $(document).on('change', '.file', function () {
+            $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        });
+
+        $('#login-button').click(function () {
+            $('#login-show').show();
+            $('#register-hide').hide();
+            $('#back-bttn').show();
+            $('.already-regis').hide();
+        });
+
+        $('#back-bttn').click(function () {
+            $('#login-show').hide();
+            $('#register-hide').show();
+            $('#back-bttn').hide();
+            $('.already-regis').show();
+            $('#forget-show').hide();
+        });
+
+        $('#set-pass').click(function () {
+            $('#forget-show').show();
+            $('#login-show').hide();
+            $('#register-hide').hide();
+
+        });
+
+    </script>
+</body>
+</html>

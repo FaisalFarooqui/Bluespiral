@@ -1,0 +1,75 @@
+﻿@model BlueSpiral.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "The Blue Spiral";
+}
+
+
+
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="col-md-7 col-sm-10 pt-5 pb-5">
+           
+            <div class="blue-login login-form mt-5" id="login-show" style="display: block;">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @*<div class="row margin-bottom-1x mt-3">
+                <div class="col-xl-6 col-md-6 col-sm-6"><a class="btn btn-sm btn-block twitter-btn" href="#"><i class="socicon-twitter"></i>&nbsp;Twitter login</a></div>
+                <div class="col-xl-6 col-md-6 col-sm-6"><a class="btn btn-sm btn-block facebook-btn" href="#"><i class="socicon-facebook"></i>&nbsp;Facebook login</a></div>
+            </div>*@
+
+                    <div class="row margin-bottom-1x mt-3">
+                        <div class="col-xl-6 col-md-6 col-sm-6"> @Html.ActionLink("Customer Register", "register", "Account", new { @class = "btn btn-sm btn-block twitter-btn", })&nbsp;</div>
+                        <div class="col-xl-6 col-md-6 col-sm-6"> @Html.ActionLink("Vendor Request", "VendorApplication", "Account", new { @class = "btn btn-sm btn-block facebook-btn", })&nbsp;</div>
+                    </div>
+
+
+                    <h4 class="margin-bottom-1x text-white">Or Using Form Below</h4>
+                    <div class="form-group input-group">
+                        @*<input class="form-control" type="email" placeholder="Email" required>*@
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                        <span class="input-group-addon"><i class="icon-mail"></i></span>
+                    </div>
+                    <div class="form-group input-group">
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                        @*<input class="form-control" type="password" placeholder="Password" required>*@
+                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between padding-bottom-1x">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="remember_me" checked>
+                            <label class="custom-control-label" for="remember_me">Remember me</label>
+                        </div><a class="navi-link text-warning" href="#" id="set-pass">Forgot password?</a>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary margin-bottom-none mod-btn" type="submit">Login</button>
+                    </div>
+                    @*</form>*@
+                }
+            </div>
+            <div class="blue-login login-form mt-5" id="forget-show" style="display: none;">
+
+                <h4 class="margin-bottom-1x text-white">Forgot your password?</h4>
+                <p class="text-justify">Change your password in three easy steps. This helps to keep your new password secure.</p>
+                <ol class="list-unstyled text-justify">
+                    <li><span class="text-white text-medium">1. </span>Fill in your email address below.</li>
+                    <li><span class="text-white text-medium">2. </span>We'll email you a temporary code.</li>
+                    <li><span class="text-white text-medium">3. </span>Use the code to change your password on our secure website.</li>
+                </ol>
+                <form class="mt-4">
+                    <div class="form-group">
+                        <label for="email-for-pass text-white">Enter your email address</label>
+                        <input class="form-control" type="text" id="email-for-pass" required=""><small class="form-text text-muted">Type in the email address you used when you registered with BlueSpiral. Then we'll email a code to this address.</small>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-primary mod-btn" type="button">Get New Password</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
