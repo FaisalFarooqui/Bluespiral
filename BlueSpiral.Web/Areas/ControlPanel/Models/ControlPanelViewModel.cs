@@ -102,7 +102,7 @@ namespace BlueSpiral.Web.Areas.ControlPanel.Models
         public bool isdeleted { get; set; }
         public DateTime entryDate { get; set; }
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
 
 
     }

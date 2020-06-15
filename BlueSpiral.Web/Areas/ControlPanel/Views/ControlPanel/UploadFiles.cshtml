@@ -1,19 +1,29 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "UploadFiles";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>UploadFiles</h4>
+    <hr class="padding-bottom-1x">
+    @using (Html.BeginForm("UploadFiles", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-<h2>UploadFiles</h2>
-@using (Html.BeginForm("UploadFiles", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-
-    <input type="file" multiple name="files" value="Browse" />
+    <input type="file" multiple name="files" value="Browse" class="file" required=""/>
+    <div class="input-group col-xs-12">
+        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+        <span class="input-group-btn">
+            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+        </span>
+    </div>
     <br />
     <input type="submit" value="Upload" />
     if (ViewBag.UploadSuccess == true)
     {
-        <span>Upload Completed Successfully</span>
+    <span>Upload Completed Successfully</span>
     }
 
-}
+    }
+    
+</div>
+

@@ -9,15 +9,18 @@
     <meta name="author" content="Rokaux">
     <!-- Mobile Specific Meta Tag-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    @*<link rel="stylesheet" media="screen" href="css/vendor.min.css">*@
+    <link rel="stylesheet" media="screen" href="http://freelancer.flyaway.co.in/css/vendor.min.css">
     <!-- Main Template Styles-->
-    @*<link id="mainStyles" rel="stylesheet" media="screen" href="css/styles.min.css">*@
-    @Styles.Render("~/Content/cssStyle")
-
-
+    <link id="mainStyles" rel="stylesheet" media="screen" href="http://freelancer.flyaway.co.in/css/styles.min.css">
     <!-- Customizer Styles-->
-    @*<link rel="stylesheet" media="screen" href="customizer/customizer.min.css">*@
+    <link rel="stylesheet" media="screen" href="http://freelancer.flyaway.co.in/css/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+    <link rel="stylesheet" type="text/css" href="http://freelancer.flyaway.co.in/css/dataTables.bootstrap.min.css">
+
+    <link rel="stylesheet" media="screen" href="http://freelancer.flyaway.co.in/customizer/customizer.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://freelancer.flyaway.co.in/css/flexslider-min.css">
+
 
     <!-- Google Tag Manager-->
     <script>
@@ -31,24 +34,19 @@
         })(window, document, 'script', 'dataLayer', 'GTM-T4DJFPZ');
     </script>
     <!-- Modernizr-->
-    @*<script src="js/modernizr.min.js"></script>*@
-    @Scripts.Render("~/bundles/modernizr")
-    <script src="js/vendor.min.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <link rel="stylesheet" href="css/flexslider-min.css">
-    <link href="~/Content/customizer/customizer.min.css" rel="stylesheet" />
-    @*@Html.Action("GetMenuList", "ShopOwner")*@
+
+    <script src="http://freelancer.flyaway.co.in/js/modernizr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <!--Body-->
 <body>
-      <script src="~/Scripts/customizer/Menu.js"></script>
-            <script>
-                $(document).ready(function () {
-                    DisplayMenu();
-                });
-               
-              
+    <script src="~/Scripts/customizer/Menu.js"></script>
+    <script>
+        $(document).ready(function () {
+            DisplayMenu();
+        });
+
+
     </script>
     <!--Template Customizer-- >
     <div class="customizer-backdrop"></div>
@@ -59,73 +57,73 @@
             <h3 class="offcanvas-title">All Categories</h3>
         </div>
         <nav class="offcanvas-menu">
-         
+
             <ul class="menu" id="menulist">
 
                 @*<li class="has-children">
-                <span><a href = "#" > Men's Shoes</a><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Sneakers </a ></li >
-                    <li ><a href="#">Loafers</a></li>
-                    <li><a href = "#" > Boat Shoes</a></li>
-                    <li><a href = "#" > Sandals </a ></li >
-                    <li ><a href="#">View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Women's Shoes</a><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Sandals </a ></li >
-                    <li >< a href="#">Flats</a></li>
-                    <li><a href = "#" > Sneakers </a ></li >
-                    <li >< a href="#">Heels</a></li>
-                    <li><a href = "#" > View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Men's Clothing</a><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Shirts & amp; Tops</a></li>
-                    <li><a href = "#" > Pants </a ></li >
-                    <li ><a href="#">Jackets</a></li>
-                    <li><a href = "#" > View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Women's Clothing</a><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Dresses </a ></li >
-                    <li ><a href="#">Shirts &amp; Tops</a></li>
-                    <li><a href = "#" > Shorts </a ></li >
-                    <li ><a href="#">Swimwear</a></li>
-                    <li><a href = "#" > View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Kid's Shoes</a><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Boots </a ></ li >
-                    <li >< a href="#">Sandals</a></li>
-                    <li><a href = "#" > Crib Shoes</a></li>
-                    <li><a href = "#" > Loafers </a ></li >
-                    <li ><a href="#">View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Bags </a ><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Handbags </a ></li >
-                    <li >< a href="#">Backpacks</a></li>
-                    <li><a href = "#" > Luggage </a ></li >
-                    <li >< a href="#">Wallets</a></li>
-                    <li><a href = "#" > View All</a></li>
-                </ul>
-            </li>
-            <li class="has-children">
-                <span><a href = "#" > Accessories </a ><span class="sub-menu-toggle"></span></span>
-                <ul class="offcanvas-submenu">
-                    <li><a href = "#" > Sunglasses </a ></li >
-                    < li >< a href="#">Hats</a></li>*@
+                        <span><a href = "#" > Men's Shoes</a><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Sneakers </a ></li >
+                            <li ><a href="#">Loafers</a></li>
+                            <li><a href = "#" > Boat Shoes</a></li>
+                            <li><a href = "#" > Sandals </a ></li >
+                            <li ><a href="#">View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Women's Shoes</a><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Sandals </a ></li >
+                            <li >< a href="#">Flats</a></li>
+                            <li><a href = "#" > Sneakers </a ></li >
+                            <li >< a href="#">Heels</a></li>
+                            <li><a href = "#" > View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Men's Clothing</a><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Shirts & amp; Tops</a></li>
+                            <li><a href = "#" > Pants </a ></li >
+                            <li ><a href="#">Jackets</a></li>
+                            <li><a href = "#" > View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Women's Clothing</a><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Dresses </a ></li >
+                            <li ><a href="#">Shirts &amp; Tops</a></li>
+                            <li><a href = "#" > Shorts </a ></li >
+                            <li ><a href="#">Swimwear</a></li>
+                            <li><a href = "#" > View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Kid's Shoes</a><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Boots </a ></ li >
+                            <li >< a href="#">Sandals</a></li>
+                            <li><a href = "#" > Crib Shoes</a></li>
+                            <li><a href = "#" > Loafers </a ></li >
+                            <li ><a href="#">View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Bags </a ><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Handbags </a ></li >
+                            <li >< a href="#">Backpacks</a></li>
+                            <li><a href = "#" > Luggage </a ></li >
+                            <li >< a href="#">Wallets</a></li>
+                            <li><a href = "#" > View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <span><a href = "#" > Accessories </a ><span class="sub-menu-toggle"></span></span>
+                        <ul class="offcanvas-submenu">
+                            <li><a href = "#" > Sunglasses </a ></li >
+                            < li >< a href="#">Hats</a></li>*@
 
             </ul>
         </nav>
@@ -374,21 +372,21 @@
                     </div>
                     <div class="account">
                         <a href="#"></a><i class="icon-head"></i>
-                                        <ul class="toolbar-dropdown">
-                                            <li class="sub-menu-user">
-                                                <div class="user-ava">
-                                                    <img src="@Session["PhotoUrl"].ToString()" alt="name">
-                                                </div>
-                                                <div class="user-info">
-                                                    <h6 class="text-dark">@Session["Name"].ToString()</h6>
-                                                </div>
-                                            </li>
-                                            <li>@Html.ActionLink("My Profile", "Profile", "ShopOwner")</a></li>
-                                            <li>@Html.ActionLink("Wallet", "Wallet", "ShopOwner")</li>
-                                            <li>@Html.ActionLink("Cart", "Cart", "ShopOwner")</li>
-                                            <li class="sub-menu-separator"></li>
-                                            <li> @Html.ActionLink("Logout", "Logout", "ShopOwner")</li>
-                                        </ul>
+                        <ul class="toolbar-dropdown">
+                            <li class="sub-menu-user">
+                                <div class="user-ava">
+                                    <img src="@Session["PhotoUrl"].ToString()" alt="name">
+                                </div>
+                                <div class="user-info">
+                                    <h6 class="text-dark">@Session["Name"].ToString()</h6>
+                                </div>
+                            </li>
+                            <li>@Html.ActionLink("My Profile", "Profile", "ShopOwner")</a></li>
+                            <li>@Html.ActionLink("Wallet", "Wallet", "ShopOwner")</li>
+                            <li>@Html.ActionLink("Cart", "Cart", "ShopOwner")</li>
+                            <li class="sub-menu-separator"></li>
+                            <li> @Html.ActionLink("Logout", "Logout", "ShopOwner")</li>
+                        </ul>
                     </div>
                     <div class="cart" style="display:none;">
                         <a href="cart.html"></a><i class="icon-bag"></i><span class="count">3</span><!-- <span class="subtotal">Rs-289.68</span> -->
@@ -624,38 +622,148 @@
     <a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
     <!-- Backdrop-->
     <div class="site-backdrop"></div>
-    <!-- JavaScript(jQuery) libraries, plugins and custom scripts-->
-    @*<script src="js/vendor.min.js"></script>
-        <script src="js/scripts.min.js"></script>*@
-    @Scripts.Render("~/bundles/javaScripts")
+    <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
+    <script src="http://freelancer.flyaway.co.in/js/vendor.min.js"></script>
+    <script src="http://freelancer.flyaway.co.in/js/scripts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <!-- Customizer scripts-->
-    @*<script src="customizer/customizer.min.js"></script>*@
-    @Scripts.Render("~/bundles/customizer")
-    <script type="text/javascript">
-                $(document).on('click', '.browse', function(){
-                  var file = $(this).parent().parent().parent().find('.file');
-                  file.trigger('click');
-                });
-                $(document).on('change', '.file', function(){
-                  $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
-                });
-    </script>
-    <script type="text/javascript">
-              function openCity(evt, cityName) {
-                var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                  tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                  tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
-              }
-              document.getElementById("defaultOpen").click();
-    </script>
+    <script src="http://freelancer.flyaway.co.in/customizer/customizer.min.js"></script>
+    <script src="http://freelancer.flyaway.co.in/js/jquery.flexslider-min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
 
-    </body>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript">
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: false
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).on('click', '.browse', function () {
+            var file = $(this).parent().parent().parent().find('.file');
+            file.trigger('click');
+        });
+        $(document).on('change', '.file', function () {
+            $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        });
+    </script>
+    <script type="text/javascript">
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById("defaultOpen").click();
+    </script>
+    <script>
+        window.onload = function () {
+            var options = {
+                title: {
+                    text: ""
+                },
+                data: [
+                    {
+                        type: "column",
+                        dataPoints: [
+                            { label: "jan", y: 10 },
+                            { label: "feb", y: 15 },
+                            { label: "march", y: 25 },
+                            { label: "april", y: 30 },
+                            { label: "may", y: 2 },
+                            { label: "june", y: 5 },
+                            { label: "july", y: 8 },
+                            { label: "aug", y: 11 },
+                            { label: "sep", y: 25 },
+                            { label: "oct", y: 8 },
+                            { label: "nov", y: 6 },
+                            { label: "dec", y: 3 },
+                        ]
+                    }
+                ]
+            };
+
+            $("#chartContainer").CanvasJSChart(options);
+
+            var optionsmonth = {
+                title: {
+                    text: ""
+                },
+                data: [
+                    {
+                        type: "column",
+                        dataPoints: [
+                            { label: "jan", y: 5 },
+                            { label: "feb", y: 1 },
+                            { label: "march", y: 2 },
+                            { label: "april", y: 30 },
+                            { label: "may", y: 21 },
+                            { label: "june", y: 5 },
+                            { label: "july", y: 8 },
+                            { label: "aug", y: 6 },
+                            { label: "sep", y: 1 },
+                            { label: "oct", y: 12 },
+                            { label: "nov", y: 6 },
+                            { label: "dec", y: 3 }
+                        ]
+                    }
+                ]
+            };
+
+            $("#chartContainermonth").CanvasJSChart(optionsmonth);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            var ctx = $("#chart-line");
+            var myLineChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ["Order Cancled", "Order Completed", "Order Pending"],
+                    datasets: [{
+                        data: [1200, 1700, 800],
+                        backgroundColor: ["rgba(255, 0, 0, 0.5)", "#60c1ee", "#3ec7b5"]
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: ''
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable(
+
+                {
+
+                    "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                    "iDisplayLength": 5
+                }
+            );
+        });
+
+
+        function checkAll(bx) {
+            var cbs = document.getElementsByTagName('input');
+            for (var i = 0; i < cbs.length; i++) {
+                if (cbs[i].type == 'checkbox') {
+                    cbs[i].checked = bx.checked;
+                }
+            }
+        }
+    </script>
+</body>
 </html>

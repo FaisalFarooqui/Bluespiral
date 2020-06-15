@@ -372,7 +372,7 @@ namespace BlueSpiral.Web.Areas.ControlPanel.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UploadFiles(List<HttpPostedFileBase> Files)
+        public ActionResult UploadFiles(int? id,List<HttpPostedFileBase> Files)
         {
             var path = "";
             if (Files.Count > 0)
@@ -392,6 +392,7 @@ namespace BlueSpiral.Web.Areas.ControlPanel.Controllers
                                 item.SaveAs(path);
                                
                                 ProductImageViewModel PIVM = new ProductImageViewModel();
+                                PIVM.ProductId = id;
                                 PIVM.ImageType = 1;
                                 PIVM.ImgUrl = "../../../Uploads/" + item.FileName;
                                 PIVM.isdeleted = false;
