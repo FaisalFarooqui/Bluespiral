@@ -1,67 +1,92 @@
-﻿@model BlueSpiral.Web.Areas.ControlPanel.Models.ProductViewModel
+﻿@model BlueSpiral.Web.Areas.ControlPanel.Models.Product
 @{
     ViewBag.Title = "Product";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-
+<script src="~/Scripts/customizer/Menu.js"></script>
 <div id="order" class="tabcontent" style="display: block;">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-    <h4>Order</h4>
+    <h4>Product</h4>
+    <hr class="padding-bottom-1x">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-    <div class="table-responsive">
+    <div class="table-responsive style-7">
         @if (TempData["msg"] != null)
         {
             <span style="color:forestgreen">Upload Completed Successfully</span>
         }
-        <table class="table table-hover margin-bottom-none">
-            <thead>
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example4" cellspacing="0" style="width:100%">
+            <thead style="font-size: 13px;">
                 <tr>
                     <th>Product Name</th>
                     <th>Category</th>
-                    <th>Sub Category</th>
+                    @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                    {
+                        <th>Name(Shop)</th>
+                    }
 
-                    <th>Description</th>
-                    <th>Status</th>
+                    @*@if (Convert.ToInt32(Session["UserTypeId"]) == 3)
+                        {*@
+                    <th>Price & MOQ</th>
+                    @*<th>MOQ</th>
+                        <th>Sample Price</th>*@
+                    @*}*@
+                    <th>Product Status</th>
+                    <th>Add Stock</th>
+                    <th>Image(WM)</th>
                     @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
                     {
                         <th>Action</th>
                     }
-                    </tr>
+                </tr>
             </thead>
             <tbody>
                 @if (ViewBag.ProductList != null)
                 {
                     foreach (var item in ViewBag.ProductList)
                     {
-                <tr>
-                    <td><a href="/ControlPanel/ControlPanel/EditProduct" onclick="document.getElementById('id01').style.display='block'">@item.product_name</a></td>
-                    <td>@item.HandicraftCategory</td>
-                    <td>@item.HandicraftSubCategory</td>
+                        <tr>
+                            <td><a href="#">@item.product_name</a></td>
+                            <td>@item.HandicraftCategory</td>
+                            @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                            {
+                                <td>@item.UserInfo</td>
+                            }
 
-                    <td>@item.product_description</td>
-                    <td><a class="btn btn-primary btn-sm" href="#"><span>Active</span></a></td>
-                    @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
-                    {
-                        <td>
-                            <i class="fa fa-trash action-icon mr-1"></i>
-                            <i class="fa fa-edit action-icon mr-1"></i>
+                            @*@if (Convert.ToInt32(Session["UserTypeId"]) == 3)
+                                {*@
+                            <td><span class="blue-highlight">Price : @item.price_shopkeeper</span><br /><span  class="blue-highlight">MOQ: @item.moq_shopkeeper </span><br /><span class="blue-highlight"> Sample Price: @item.SamplePrice</span></td>
+                            @*<td>@item.moq_shopkeeper</td>
+                                <td>@item.SamplePrice</td>*@
 
-                            <a href="/ControlPanel/ControlPanel/UploadFiles/@item.product_id" class="elements"><i class="fa fa-camera  action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Water Mark Image"></i></a>
 
-                            <a href="/ControlPanel/ControlPanel/UploadFiles/@item.product_id" class="elements"><i class="fa fa-camera action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Orignal Image"></i></a>
+                            @*}*@
+                            <td><a class="btn btn-primary btn-sm" href="#"><span>Active</span></a></td>
+                            <td><a class="btn btn-primary btn-sm" href="#" onclick="document.getElementById('id01').style.display='block';getproductdetails(@item.product_id,'nonstock')"><span>Add</span></a></td>
+                            <td class="text-center"><a href="#"><img src="@item.ImgUrl" class="null-imgs60" /></a></td>
+                            @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                            {
 
-                        </td>
-                    }
-                    </tr>
+                                <td>
+                                    <i class="fa fa-trash action-icon mr-1"></i>
+
+                                    <a href="#" onclick="document.getElementById('id01').style.display='block';getproductdetails(@item.product_id,'stock')"><i class="fa fa-edit action-icon mr-1"></i></a>
+                                    <a href="/ControlPanel/ControlPanel/UploadFiles/@item.product_id?Type=WaterMark" class="elements"><i class="fa fa-camera  action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Water Mark Image"></i></a>
+
+                                    <a href="/ControlPanel/ControlPanel/UploadFiles/@item.product_id?Type=Original" class="elements"><i class="fa fa-camera action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Orignal Image"></i></a>
+
+                                </td>
+                            }
+                        </tr>
 
                     }
                 }
 
-                    </tbody>
+            </tbody>
         </table>
 
 
@@ -70,12 +95,11 @@
     <hr>
     @*<div class="text-right"><a class="btn btn-link-primary margin-bottom-none" data-toggle="modal" data-target="#openTicket"><i class="icon-download"></i>&nbsp;Add New Product</a></div>*@
 </div>
-@if (Convert.ToInt32(Session["UserTypeId"])!=1)
-{
-<div class="text-right">
-    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-link-primary margin-bottom-none">Add New Product</button>
-</div>
-}
+
+    <div class="text-right">
+        <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-link-primary margin-bottom-none">Add New Product</button>
+    </div>
+
 
 @*@using(Html.BeginForm("Product","ControlPanel", FormMethod.Post))
     {*@
@@ -116,17 +140,29 @@
                 </div>
 
                 <form class="w3-container">
-                    <div class="row m-0">
+                    @Html.HiddenFor(m => m.product_id, new { })
+                    <div class="row m-0 p-3" id="divnonstock">
+                        @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                        {
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="account-fn"> Supplier</label>
+                                    @Html.DropDownListFor(m => m.VendorId, ViewBag.Supplier as SelectList, "Choose Supplier", new { @class = "form-control", @id = "VendorId" })
+                                </div>
+                            </div>
+                        }
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="account-fn"> Category Name</label>
                                 @Html.DropDownListFor(m => m.HandicraftCategoryId, ViewBag.Category as SelectList, "Choose Category", new { @class = "form-control", @id = "HandicraftCategoryId", @onchange = "CategoryWiseSubCategory()" })
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="account-fn"> Sub Category Name</label>
-                                @Html.DropDownListFor(m => m.HandicraftSubCategoryId, new SelectList(Enumerable.Empty<SelectListItem>(), "HandicraftSubCategoryId", "HandicraftSubCategory"), "Choose SubCategory", new { @class = "form-control", @id = "SubCategory" })
+                                <input type="hidden" id="hdnsubcategory" />
+                                @Html.DropDownListFor(m => m.HandicraftSubCategoryId, new SelectList(Enumerable.Empty<SelectListItem>(), "HandicraftSubCategoryId", "HandicraftSubCategory"), "Choose SubCategory", new { @class = "form-control", @id = "SubCategory", @required = "required" })
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -149,69 +185,140 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="account-fn">Color</label>
-                                @Html.DropDownListFor(m => m.product_colour, ViewBag.Colour as SelectList, "Choose Colour", new { @class = "form-control", @id = "product_colour",  })
-                              
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-fn"> Price for Defence</label>
-                                @Html.TextBoxFor(m => m.price_defence, new { @class = "form-control", @placeholder = "Price for Defence",@type= "number" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-fn"> Price for Shopkeeper</label>
-                                @Html.TextBoxFor(m => m.price_shopkeeper, new { @class = "form-control", @placeholder = "Price for Shopkeeper", @type = "number" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-fn"> MOQ for Defence</label>
-                                @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Defence", @type = "number" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="account-fn"> MOQ for Shopkeeper</label>
-                                @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Shopkeeper", @type = "number" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="account-fn"> Discount</label>
+
                                 @Html.TextBoxFor(m => m.discount, new { @class = "form-control", @placeholder = "Discount", @type = "number" })
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="account-fn"> Total In Stock</label>
-                                @Html.TextBoxFor(m => m.product_stock, new { @class = "form-control", @placeholder = "Total In Stock", @type = "number" })
+                                <label for="account-fn"> Material</label>
+
+                                @Html.TextBoxFor(m => m.Material, new { @class = "form-control", @placeholder = "Material" })
+
                             </div>
                         </div>
-                        <div class="col-12 padding-bottom-1x">
-                            <hr class="mt-2 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="account-fn">Sample Price</label>
+                                @Html.TextBoxFor(m => m.SamplePrice, new { @class = "form-control", @placeholder = "Sample Price", @type = "number" })
+                            </div>
+                        </div>
+                        @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> MOQ For Shopkeeper</label>
+                                    @Html.TextBoxFor(m => m.moq_shopkeeper, new { @class = "form-control", @placeholder = "MOQ for Shopkeeper", @type = "number" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> Price For Shopkeeper</label>
+                                    @Html.TextBoxFor(m => m.price_shopkeeper, new { @class = "form-control", @placeholder = "Price for Shopkeeper", @type = "number" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> MOQ for Defence</label>
+                                    @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Defence", @type = "number" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> Price for Defence</label>
+                                    @Html.TextBoxFor(m => m.price_defence, new { @class = "form-control", @placeholder = "Price for Defence", @type = "number" })
+                                </div>
+                            </div>
+
+
+
+                        }
+                        @if (Convert.ToInt32(Session["UserTypeId"]) == 3)
+                        {
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> Price</label>
+                                    @Html.TextBoxFor(m => m.price_shopkeeper, new { @class = "form-control", @placeholder = "Price", @type = "number" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="account-fn"> MOQ</label>
+                                    @Html.TextBoxFor(m => m.moq_shopkeeper, new { @class = "form-control", @placeholder = "MOQ", @type = "number" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-6 pl-4">
+                        <div class="form-group">
+                            <label for="account-fn"> Total In Stock</label>
+                            @Html.TextBoxFor(m => m.product_stock, new { @class = "form-control", @placeholder = "Total In Stock", @type = "number" })
+                        </div>
+                    </div>
+                    @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+                    {
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="checkbox" id="chkdailyoffer" onclick="DailyOffer();" />Include in Daily Offers
+                                @Html.TextBoxFor(m => m.TimeDuration, new { @class = "form-control", @placeholder = "Time Duration (Minutes)", @type = "time", @style = "display:none" })
+                            </div>
+                        </div>
+                    }
+
+                        <div class="col-12 pb-2">
+                            <hr class="mt-1 mb-1">
                             <div class="text-right">
                                 <button class="btn btn-primary margin-right-none" type="submit">Add</button>
                             </div>
                         </div>
-                    </div>
 
-                </form>
 
-                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                    @*<button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>*@
+                    </form>
 
-                </div>
+              
 
             </div>
         </div>
     </div>
 }
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        document.getElementById('id01').style.display = 'block';
+
+    </script>
+}
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
 
+<script src="~/Scripts/customizer/Menu.js"></script>
+@Scripts.Render("~/register/js")
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example4').DataTable(
 
-@Scripts.Render("~/register/js");
+            {
+
+                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "iDisplayLength": 5
+            }
+        );
+    });
+
+
+    function checkAll(bx) {
+        var cbs = document.getElementsByTagName('input');
+        for (var i = 0; i < cbs.length; i++) {
+            if (cbs[i].type == 'checkbox') {
+                cbs[i].checked = bx.checked;
+            }
+        }
+    }
+</script>

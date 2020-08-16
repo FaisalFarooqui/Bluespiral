@@ -1,0 +1,106 @@
+﻿@model BlueSpiral.Web.Areas.ShopOwner.Models.WalletViewModel
+@{
+    ViewBag.Title = "CreditWallet";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Manual Cash Back</h4>
+    <hr class="padding-bottom-1x">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @using (Html.BeginForm("CreditWallet", "ControlPanel", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> User Id</label>
+
+                    @Html.TextBoxFor(m => m.UserId, new { @class = "form-control", @placeholder = "User Id", @type = "text" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Total Purchase</label>
+                    @Html.TextBoxFor(m => m.TotalPurchase, new { @class = "form-control", @placeholder = " Total Purchase", @type = "text" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> From Date</label>
+
+                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date", @type = "date" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> To Date</label>
+                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date", @type = "date" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Cash Back Amount</label>
+
+                    @Html.TextBoxFor(m => m.CashBackAmount, new { @class = "form-control", @placeholder = "Cash Back Amount", @type = "text" })
+                </div>
+            </div>
+           
+        </div>
+        @*<div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn">Email Id</label>
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @placeholder = "Email Id" })
+                </div>
+            </div>*@
+
+        <div class="col-12 padding-bottom-1x">
+            <hr class="mt-2 mb-3">
+            <div class="text-right">
+                <button class="btn btn-primary margin-right-none" type="submit">Credit</button>
+            </div>
+        </div>
+    }
+</div>
+@*<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Wallet History</h4>
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <div class="table-responsive">
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example3" cellspacing="0" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Schedule</th>
+                    <th>EmailId</th>
+                    <th>TotalPurchase</th>
+                    <th>CashBackAmount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.CashBack != null)
+                {
+                    foreach (var item in ViewBag.CashBack)
+                    {
+                        <tr>
+                            <td><a class="text-medium navi-link">@item.SrNo</a></td>
+                            <td>@item.FromDate - @item.ToDate</td>
+                            <td>@item.EmailId</td>
+                            <td>@item.TotalPurchase</td>
+                            <td>@item.CashBackAmount</td>
+                           
+                        </tr>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Cash Back List</a></div>
+</div>*@

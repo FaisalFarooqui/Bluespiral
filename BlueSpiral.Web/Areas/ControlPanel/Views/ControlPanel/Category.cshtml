@@ -3,6 +3,7 @@
     ViewBag.Title = "Category";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
 
 <div class="tabcontent">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
@@ -31,7 +32,7 @@
     <h4>Caregory List</h4>
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     <div class="table-responsive">
-        <table class="table table-hover margin-bottom-none">
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example2" cellspacing="0" style="width:100%">
             <thead>
                 <tr>
                     <th>Sr. No.</th>
@@ -44,17 +45,17 @@
                 {
                     foreach (var item in ViewBag.Category)
                     {
-                <tr>
-                    <td><a class="text-medium navi-link">1</a></td>
-                    <td>@item.HandicraftCategory</td>
-                    @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
-                    <td>
-                        <a href="/ControlPanel/ControlPanel/RemoveCategory/@item.HandicraftCategoryId"><i class="fa fa-trash action-icon mr-1"></i>  </a>
-                        
-                      
+                        <tr>
+                            <td><a class="text-medium navi-link">1</a></td>
+                            <td>@item.HandicraftCategory</td>
+                            @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
+                            <td>
+                                <a href="/ControlPanel/ControlPanel/RemoveCategory/@item.HandicraftCategoryId"><i class="fa fa-trash action-icon mr-1"></i>  </a>
 
-                    </td>
-                </tr>
+
+
+                            </td>
+                        </tr>
                     }
                 }
 
@@ -66,4 +67,27 @@
     <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Category List</a></div>
 </div>
 
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example2').DataTable(
 
+            {
+
+                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "iDisplayLength": 5
+            }
+        );
+    });
+
+
+    function checkAll(bx) {
+        var cbs = document.getElementsByTagName('input');
+        for (var i = 0; i < cbs.length; i++) {
+            if (cbs[i].type == 'checkbox') {
+                cbs[i].checked = bx.checked;
+            }
+        }
+    }
+</script>

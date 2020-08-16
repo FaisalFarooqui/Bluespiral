@@ -3,6 +3,7 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+<script src="~/Scripts/customizer/Menu.js"></script>
 <div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
     <div id="myprofile" class="tabcontent" style="display: block;">
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
@@ -39,19 +40,19 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="account-pass">New Password</label>
-                    @Html.TextBoxFor(m => m.Pswd, new { @class = "form-control", @placeholder = "Password" })
+                    @Html.TextBoxFor(m => m.Pswd, new { @class = "form-control", @placeholder = "Password", @type = "password" })
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="account-confirm-pass">Confirm Password</label>
-                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password" })
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password", @type = "password", @onblur = "ValidatePswd()" })
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Profile Picture</label>
-                    <input type="file" name="ImageFile" class="file" required />
+                    <input type="file" name="ImageFile" class="file"  />
                     <div class="input-group col-xs-12">
                         <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
                         <span class="input-group-btn">

@@ -29,6 +29,7 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         private readonly IRepository<MS_HandicraftCategory> _HandicraftCategory;
         private readonly IRepository<TR_Users> _Userd;
         private readonly IRepository<TR_Cart> _Cart;
+        private readonly IRepository<TR_Address> _Address;
 
         public ShopOwnerController()
         {
@@ -40,6 +41,7 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
             _HandicraftCategory = new Repository<MS_HandicraftCategory>(_context);
             _Userd = new Repository<TR_Users>(_context);
             _Cart = new Repository<TR_Cart>(_context);
+            _Address = new Repository<TR_Address>(_context);
         }
         // GET: ShopOwner/ShopOwner
         public ActionResult Dashboard()
@@ -74,6 +76,14 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         }
         public ActionResult Index2()
         {
+            List<TopSubCategoryViewModel> vData = null;
+            List<TopProductViewModel> vProductData = null;
+            string Query = "SELECT HandicraftSubCategory,HandicraftSubCategoryId,isnull(ImgUrl,'../../../Uploads/na.jpg') AS ImgUrl FROM MS_HandicraftSubCategory WHERE VisibilityStatus=1 ORDER by EntryDate DESC";
+            vData = _context.Database.SqlQuery<TopSubCategoryViewModel>(Query).ToList();
+            ViewBag.TopSubCategory = vData;
+            string Query2 = "SELECT TR.product_id,TR.moq_defence,TR.moq_shopkeeper,TR.product_name,isnull(TR.price_defence,0) AS price_defence,isnull(TR.price_shopkeeper,0) AS price_shopkeeper,isnull(TR.discount,0) AS discount,TR.price_shopkeeper+ TR.discount AS TotAmountShopkeeper,TR.price_defence+ TR.discount AS TotDefence,isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TR.product_id),'../../../Uploads/na.jpg') AS ImgUrl FROM TR_Product TR  ORDER BY TR.EntryDate desc";
+            vProductData = _context.Database.SqlQuery<TopProductViewModel>(Query2).ToList();
+            ViewBag.TopProduct = vProductData;
             Session["Account"] = 0;
             return View();
         }
@@ -121,7 +131,7 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
             if (model.ImageFile != null)
             {
                 //Use Namespace called :  System.IO  
-                FileName = RandomNumber(4, 4).ToString();
+                FileName = RandomNumber(1, 4).ToString();
 
                 //To Get File Extension  
                 string FileExtension = Path.GetExtension(model.ImageFile.FileName);
@@ -130,13 +140,15 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
                 FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
 
                 //Get Upload path from Web.Config file AppSettings.  
-                //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+                var path = Path.Combine(Server.MapPath("~/Uploads"), model.ImageFile.FileName);
+                model.ImageFile.SaveAs(path);
 
                 //Its Create complete path to store in server.  
-                model.ImagePath = Server.MapPath(UploadPath) + FileName;
+                model.ImagePath = "../../../Uploads/" + model.ImageFile.FileName;
+                ProfileDetails.ImagePath = model.ImagePath;
 
-                //To copy and save file into server.  
-                model.ImageFile.SaveAs(model.ImagePath);
+
+
             }
             _Userd.Update(ProfileDetails);
 
@@ -145,7 +157,8 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
 
             if (statusid > 0)
             {
-
+                Session["PhotoUrl"] = ProfileDetails.ImagePath != "" ? (@"" + ProfileDetails.ImagePath) : "";
+                Session["Name"] = ProfileDetails.FName;
                 return RedirectToAction("Profile", "ShopOwner");
             }
             else
@@ -157,62 +170,157 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
             Random random = new Random();
             return random.Next(min, max);
         }
-        public ActionResult Address()
+        public ActionResult Address(int? id)
         {
+            if (Request.QueryString["revert"] != null)
+            {
+                Session["reverturl"] = Request.QueryString["revert"].ToString();
+            }
             Session["Account"] = 1;
             ViewBag.State = StateList();
             
             //transfer Unique value from session
             string Email = Session["UserEmail"].ToString();
+           
+            List<AddressList> vData = null;
+            string query = "SELECT TA.Id,TA.EmailId,TA.BusinessName,MS.StateName,MC.CityName,TA.PinCode,TA.ContactAddress FROM TR_Address TA JOIN dbo.MS_State MS ON(TA.StateId = MS.StateId) JOIN dbo.MS_City MC ON(TA.CityId = MC.CityId)  WHERE VisibiltyStatus = 1  AND TA.EmailId = '" + Email + "'";
+            vData = _context.Database.SqlQuery<AddressList>(query).ToList();
+
+            if (vData.Count > 0)
+            {
+                ViewBag.AddressList = vData;
+            }
             //find details of specific id
-            var Profile = _Userd.Find(m => m.Email == Email).FirstOrDefault();
-            ViewBag.City = StateWiseCityListType(Profile.StateId);
-            Mapper.CreateMap<TR_Users, UsersViewModel>();
-            var ProfileData = Mapper.Map<TR_Users, UsersViewModel>(Profile);
+            if (id != null)
+            {
+                var Profile = _Address.Find(m => m.Id == id).FirstOrDefault();
+
+                //ViewBag.City = StateWiseCityListType(Profile.StateId);
+                ViewBag.JavaScriptFunction = Profile.CityId;
+
+                Mapper.CreateMap<TR_Address, UsersViewModel>();
 
 
-            return View(ProfileData);
+                var ProfileData = Mapper.Map<TR_Address, UsersViewModel>(Profile);
+                return View(ProfileData);
+            }
+           
+
+            return View();
         }
         // POST: /ShopOwner/Profile
         [HttpPost]
         [AllowAnonymous]
         //[ValidateAntiForgeryToken]
-        public ActionResult Address(UsersViewModel model)
+        public ActionResult Address(UsersViewModel model,int? id)
         {
             string Email = Session["UserEmail"].ToString();
-
-            //Finding row to be updated on specific Id
-            var ProfileDetails = _Userd.Find(M => M.Email == Email).FirstOrDefault();
-
-            //Updating Visibility status
-            ProfileDetails.BusinessName = model.BusinessName;
-            ProfileDetails.StateId = model.StateId;
-            ProfileDetails.CityId = model.CityId;
-            ProfileDetails.Pincode = model.Pincode;
-            ProfileDetails.ContactAddress = model.ContactAddress;
-           
-            _Userd.Update(ProfileDetails);
-
-            //save category data in db
-            var statusid = _Userd.Save();
-
-            if (statusid > 0)
+            if (id != null )
             {
+                
 
-                return RedirectToAction("Address", "ShopOwner");
+                //Finding row to be updated on specific Id
+                var ProfileDetails = _Address.Find(m => m.Id == id).FirstOrDefault();
+                //Updating Visibility status
+                ProfileDetails.BusinessName = model.BusinessName;
+                ProfileDetails.StateId = model.StateId;
+                ProfileDetails.CityId = model.CityId;
+                ProfileDetails.PinCode = model.Pincode;
+                ProfileDetails.ContactAddress = model.ContactAddress;
+                ProfileDetails.VisibiltyStatus = true;
+
+                _Address.Update(ProfileDetails);
+
+                //save category data in db
+                var statusid = _Address.Save();
+
+                if (statusid > 0)
+                {
+                    TempData["msg"] = "Address Updated Successfully.";
+                  
+                  
+                        if(Session["reverturl"] != null)
+                        {
+                       
+                        string url = Session["reverturl"].ToString();
+                        Session["reverturl"] = null;
+                        return RedirectToAction(url, "ShopOwner");
+                    }
+                    return RedirectToAction("Address", "ShopOwner");
+                }
+                else
+                    return View();
             }
             else
-                return View();
+            {
+                TR_Address ObjTRA = new TR_Address();
+                ObjTRA.EmailId = Email;
+                ObjTRA.BusinessName = model.BusinessName;
+                ObjTRA.StateId = model.StateId;
+                ObjTRA.CityId = model.CityId;
+                ObjTRA.PinCode = model.Pincode;
+                ObjTRA.ContactAddress = model.ContactAddress;
+                ObjTRA.VisibiltyStatus = true;
+                _Address.Add(ObjTRA);
+                var Addressstatusid = _Address.Save();
+                if (Addressstatusid > 0)
+                {
+                    if (Session["reverturl"] != null)
+                    {
+                        TempData["msg"] = "Address Added Successfully.";
+                        string url = Session["reverturl"].ToString();
+                        Session["reverturl"] = null;
+                        return RedirectToAction(url, "ShopOwner");
+                    }
+                    else
+                    {
+                        TempData["msg"] = "Address Added Successfully.";
+                        return RedirectToAction("Address", "ShopOwner");
+                    }
+                }
+                else
+                    return View();
+            }
+        }
+        public ActionResult RemoveAdddress(int? id)
+        {
+            //Finding row to be updated on specific Id
+            var AddressDetails = _Address.Find(x => x.Id == id).FirstOrDefault();
+
+            if (AddressDetails != null)
+            {
+                _Address.Delete(AddressDetails);
+                var statusid = _Address.Save();
+
+                if (statusid > 0)
+                {
+                    TempData["msg"] = "Address Removed Successfully.";
+                    if (Request.QueryString["revert"] != null)
+                    {
+                        return RedirectToAction(Request.QueryString["revert"].ToString(), "ShopOwner");
+
+                    }
+                    return RedirectToAction("Address", "ShopOwner");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+
+            return View();
+
         }
         public ActionResult OrderList()
         {
             List<OrderListViewModel> vData = null;
-            string Query = "SELECT OrdeNo,convert(CHAR,EntryDate,106) AS DateOfPurchase,OrderStatus,TotalAmount FROM TR_OrderDetails";
+            string Query = "SELECT OrdeNo,convert(CHAR,EntryDate,106) AS DateOfPurchase,OrderStatus,TotalAmount FROM TR_OrderDetails WHERE EntryUser='"+Session["UserEmail"].ToString()+ "'";
             vData = _context.Database.SqlQuery<OrderListViewModel>(Query).ToList();
             ViewBag.OrderList = vData;
             Session["Account"] = 1;
             return View();
         }
+
         public ActionResult PurchaseHistory()
         {
             Session["Account"] = 1;
@@ -243,30 +351,37 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         {
             ShopProductList ObjReq = new ShopProductList();
             List<ShopProductList> vData = null;
-            string query = "SELECT TR.product_id,TR.product_name,TR.price_defence,TR.price_shopkeeper,TR.discount,TRI.ImgUrl FROM TR_Product TR JOIN TR_ProductImages TRI ON (TR.product_id=TRI.ImgId) WHERE HandicraftSubCategoryId="+ id + "";
-
+            string query = "SELECT TR.product_id,TR.moq_defence,TR.moq_shopkeeper,TR.product_name,isnull(TR.price_defence,0) AS price_defence,isnull(TR.price_shopkeeper,0) AS price_shopkeeper,isnull(TR.discount,0) AS discount,TR.price_shopkeeper+ TR.discount AS TotAmountShopkeeper,TR.price_defence+ TR.discount AS TotDefence,isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TR.product_id),'../../../Uploads/na.jpg') AS ImgUrl FROM TR_Product TR   WHERE 1=1";
+            if (id != -1)
+            {
+              query+=" AND  HandicraftSubCategoryId = " + id + "";
+                    }
             vData = _context.Database.SqlQuery<ShopProductList>(query).ToList();
 
-
-            ViewBag.ShopProductList = vData;
+            if (vData.Count > 0)
+            {
+                ViewBag.ShopProductList = vData;
+            }
             Session["Account"] = 0;
             return View();
         }
         public ActionResult SingleProduct(int? id)
         {
-            ProductViewModel ObjReq = new ProductViewModel();
+            //string Query = "SELECT OrderNo,UserId,ProductId,OrderType FROM TR_Order WHERE OrderType = 'Sample' AND UserId = "+Session["UserEmail"].ToString()+" AND ProductId = " + id+"";
+
+            Product ObjReq = new Product();
             List<SingleProductDetail> vData = null;
-            string query = "SELECT TP.product_id,HC.HandicraftCategory,HSC.HandicraftSubCategory,TP.product_name,TP.product_description,TP.price_defence,TP.price_shopkeeper,TP.moq_defence,TP.moq_shopkeeper,TP.discount FROM TR_Product TP JOIN MS_HandicraftCategory HC ON(TP.HandicraftCategoryId = HC.HandicraftCategoryId) JOIN dbo.MS_HandicraftSubCategory HSC ON(TP.HandicraftSubCategoryId = HSC.HandicraftSubCategoryId)  WHERE TP.product_id = " + id+"";
+            string query = "SELECT TP.product_id,isnull(TP.Material,0) AS Material,isnull(TP.SamplePrice,0) AS SamplePrice, isnull(TP.product_size,0) AS product_size,HC.HandicraftCategory,HSC.HandicraftSubCategory,TP.product_name,isnull(TP.product_description, 0) as product_description,isnull(TP.price_defence, 0) as price_defence,isnull(TP.price_shopkeeper, 0) as price_shopkeeper,isnull(TP.moq_defence, 0) as moq_defence,isnull(TP.moq_shopkeeper, 0) as moq_shopkeeper,isnull(TP.discount, 0) as discount,TP.price_shopkeeper + TP.discount AS TotAmountShopkeeper, TP.price_defence + TP.discount AS TotDefence,(SELECT count(1) FROM TR_Order WHERE OrderType = 'Sample' AND UserId = '" + Session["UserEmail"].ToString() + "' AND ProductId = " + id + ") AS SampleStatus FROM TR_Product TP JOIN MS_HandicraftCategory HC ON(TP.HandicraftCategoryId = HC.HandicraftCategoryId) JOIN dbo.MS_HandicraftSubCategory HSC ON(TP.HandicraftSubCategoryId = HSC.HandicraftSubCategoryId)  WHERE TP.product_id = " + id + "";
             vData = _context.Database.SqlQuery<SingleProductDetail>(query).ToList();
             ViewBag.SingleProduct = vData;
             List<SignleProductImage> vImg = null;
-            string ImgQuery = "SELECT ImgId, ImgUrl FROM dbo.TR_ProductImages WHERE ImageType =1 AND ProductId=" + id+"";
+            string ImgQuery = "SELECT ImgId, isnull(ImgUrl,'../../../Uploads/na.jpg') AS ImgUrl FROM dbo.TR_ProductImages WHERE ImageType ='Original' AND ProductId=" + id + "";
             vImg = _context.Database.SqlQuery<SignleProductImage>(ImgQuery).ToList();
             ViewBag.SingleProductimge = vImg;
             Session["Account"] = 0;
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult addtocart(int Productid, int Quantity,string OrderType)
         {
@@ -302,45 +417,75 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         }
         //
         [HttpPost]
-        public ActionResult PlaceOrder(int orderid)
+        public ActionResult PlaceOrder(int orderid,string Status,string CreditStatus,int deliveryid)
         {
             
             Session["Account"] = 0;           
            string UserId = Session["UserEmail"].ToString();
-            
-               var vData = _context.Database.SqlQuery<PlaceOrder>("Exec dbo.Pro_PlaceOrder @UserId",
-                new SqlParameter("@UserId", UserId)
+
+            var vData = _context.Database.SqlQuery<PlaceOrder>("Exec dbo.Pro_PlaceOrder @UserId,@Status,@CreditStatus,@deliveryid",
+             new SqlParameter("@UserId", UserId),
+             new SqlParameter("@Status", Status),
+             new SqlParameter("@CreditStatus", CreditStatus),
+             new SqlParameter("@deliveryid", deliveryid)
 
            ).ToList();
 
                 if (vData != null)
                 {
-                    return RedirectToAction("OrderList", "ShopOwner");
-                }
+                
+                TempData["msg"] = "Order Placed Successfully.";
+                return Json(vData, JsonRequestBehavior.AllowGet);
+            }
                 else
                 {
-                    return RedirectToAction("Cart", "ShopOwner");
-                }
+                return Json(vData, JsonRequestBehavior.AllowGet);
+            }
          
+        }
+        [HttpPost]
+        public ActionResult PlaceSampleOrder( int quantity, int productid)
+        {
+
+            Session["Account"] = 0;
+            string UserId = Session["UserEmail"].ToString();
+
+            var vData = _context.Database.SqlQuery<PlaceOrder>("Exec dbo.Pro_PlaceSampleOrder @Quantity,@ProductId,@UserId",
+               new SqlParameter("@Quantity", quantity),
+                new SqlParameter("@ProductId", productid),
+                new SqlParameter("@UserId", UserId)
+
+        ).ToList();
+
+            if (vData != null)
+            {
+                TempData["msg"] = "Sample Order Placed Successfully.";
+                return RedirectToAction("OrderList", "ShopOwner");
+            }
+            else
+            {
+                return RedirectToAction("Shop/"+ productid, "ShopOwner");
+            }
+
         }
 
         [HttpPost]
         public ActionResult updatetocart(int orderid, int Quantity)
         {
 
-            CartViewModel model = new CartViewModel();
-            Session["Account"] = 0;
-            //Finding row to be updated on specific Id
-            var ProfileDetails = _Cart.Find(M => M.Id == orderid).FirstOrDefault();
-            ProfileDetails.UserId = Session["UserEmail"].ToString();
-            ProfileDetails.Id = orderid;
-            ProfileDetails.Quantity = Quantity;
-            ProfileDetails.Entrydate = DateTime.Now;
-            ProfileDetails.EntryUser = Session["UserEmail"].ToString();
+                CartViewModel model = new CartViewModel();
+                Session["Account"] = 0;
 
+                //Finding row to be updated on specific Id
+                var ProfileDetails = _Cart.Find(M => M.Id == orderid).FirstOrDefault();
+                ProfileDetails.UserId = Session["UserEmail"].ToString();
+                ProfileDetails.Id = orderid;
+                ProfileDetails.Quantity = Quantity;
+                ProfileDetails.Entrydate = DateTime.Now;
+                ProfileDetails.EntryUser = Session["UserEmail"].ToString();
+                _Cart.Update(ProfileDetails);
 
-
-            _Cart.Update(ProfileDetails);
+           
             var statusid = _Cart.Save();
 
             if (statusid > 0)
@@ -364,7 +509,28 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         }
         public ActionResult dailyoffer()
         {
-            
+            Session["Account"] = 0;
+            string Query = "SELECT DISTINCT p.product_id,p.product_name,convert(CHAR,p.EntryDate,113) AS EntryDate,p.TimeDuration,p.price_defence,p.price_shopkeeper,p.price_shopkeeper+p.discount AS totshopkeeper,p.price_defence+p.discount AS totdefence,p.moq_defence,p.moq_shopkeeper,p.discount,isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = p.product_id),'../../../Uploads/na.jpg') AS ImgUrl FROM TR_Product AS p JOIN TR_ProductImages AS pi ON (p.product_id = pi.ProductId) WHERE DailyOfferSignal = 1 ORDER BY discount desc";
+            List<DailyOfferViewModel> vData = _context.Database.SqlQuery<DailyOfferViewModel>(Query).ToList();
+            ViewBag.dailyoffer = vData;
+            return View();
+        }
+        public ActionResult latestproduct()
+        {
+            List<TopSubCategoryViewModel> vData = null;
+            List<TopProductViewModel> vProductData = null;
+            string Query = "SELECT HandicraftSubCategory,HandicraftSubCategoryId,isnull(ImgUrl,'../../../Uploads/na.jpg') AS ImgUrl FROM MS_HandicraftSubCategory WHERE VisibilityStatus=1 ORDER by EntryDate DESC";
+            vData = _context.Database.SqlQuery<TopSubCategoryViewModel>(Query).ToList();
+            ViewBag.TopSubCategory = vData;
+            string Query2 = "SELECT TR.product_id,TR.moq_defence,TR.moq_shopkeeper,TR.product_name,isnull(TR.price_defence,0) AS price_defence,isnull(TR.price_shopkeeper,0) AS price_shopkeeper,isnull(TR.discount,0) AS discount,isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TR.product_id),'../../../Uploads/na.jpg') AS ImgUrl FROM TR_Product TR  ORDER BY TR.EntryDate desc";
+            vProductData = _context.Database.SqlQuery<TopProductViewModel>(Query2).ToList();
+            ViewBag.TopProduct = vProductData;
+            Session["Account"] = 0;
+            return View();
+        }
+        public ActionResult helpcenter()
+        {
+
             Session["Account"] = 0;
             return View();
         }
@@ -372,13 +538,38 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
         public ActionResult Cart()
         {
             List<CartListViewModel> vData = null;
-            string Query = "SELECT Tc.Id, TC.ProductId,TP.product_name AS ProductName,(SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TC.ProductId) AS ImgUrl,  TC.Quantity * (TP.price_shopkeeper + TP.discount) AS SubPrice, TC.Quantity* TP.discount AS Discount,TC.Quantity* TP.price_shopkeeper AS Price ,TC.Quantity FROM dbo.TR_Cart TC JOIN dbo.TR_Product TP ON(TC.ProductId = TP.product_id)  WHERE TC.UserId = '" + Session["UserEmail"].ToString() + "'";
+            string Query = "DECLARE @TotalAmount DECIMAL(16,2)=( SELECT isnull(sum(TC.Quantity * TP.price_shopkeeper),0)  FROM dbo.TR_Cart TC  JOIN dbo.TR_Product TP ON(TC.ProductId = TP.product_id)  WHERE TC.UserId = '" + Session["UserEmail"].ToString()+ "');            SELECT Tc.Id, TC.ProductId,TP.product_name AS ProductName,TP.moq_defence,TP.moq_shopkeeper, isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TC.ProductId),'../../../Uploads/na.jpg') AS ImgUrl,TC.Quantity * (TP.price_shopkeeper + isnull(TP.discount, 0)) AS SubPrice, TC.Quantity* isnull(TP.discount,0) AS Discount,  TC.Quantity* TP.price_shopkeeper AS Price ,TC.Quantity ,@TotalAmount AS TotalAmount  FROM dbo.TR_Cart TC  JOIN dbo.TR_Product TP ON(TC.ProductId = TP.product_id)  WHERE TC.UserId = '" + Session["UserEmail"].ToString()+"'";
             vData = _context.Database.SqlQuery<CartListViewModel>(Query).ToList();
             ViewBag.UserCart = vData;
+            if (vData.Count > 0)
+            {
+                TempData["TotalAmount"] = vData[0].TotalAmount;
+            }
+            else
+            {
+                TempData["TotalAmount"] = "0";
+            }
+            decimal PackagingCharge = Convert.ToDecimal(TempData["TotalAmount"]) * Convert.ToDecimal(0.05);
+            TempData["PackagingCharge"] = PackagingCharge;
+            TempData["ServiceCharge"] = "0";
+            decimal GrandTotalCharge = Convert.ToDecimal(TempData["TotalAmount"]) + Convert.ToDecimal(TempData["PackagingCharge"])+ Convert.ToDecimal(TempData["ServiceCharge"]);
+            TempData["GrandTotalCharge"] = GrandTotalCharge;
+            string Email = Session["UserEmail"].ToString();
+
+            List<AddressList> vAddData = null;
+            string query = "SELECT TA.Id,TA.EmailId,TA.BusinessName,MS.StateName,MC.CityName,TA.PinCode,TA.ContactAddress FROM TR_Address TA JOIN dbo.MS_State MS ON(TA.StateId = MS.StateId) JOIN dbo.MS_City MC ON(TA.CityId = MC.CityId)  WHERE VisibiltyStatus = 1  AND TA.EmailId = '" + Email + "'";
+            vAddData = _context.Database.SqlQuery<AddressList>(query).ToList();
+
+            if (vData.Count > 0)
+            {
+                ViewBag.AddressList = vAddData;
+            }
             Session["Account"] = 0;
             return View();
 
         }
+
+
         public ActionResult RemoveCartOrder(int? id)
         {
             //Finding row to be updated on specific Id
@@ -391,7 +582,7 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
 
                 if (statusid > 0)
                 {
-
+                    TempData["msg"] = "Cart Order Removed Successfully.";
                     return RedirectToAction("Cart", "ShopOwner");
                 }
                 else
@@ -433,7 +624,7 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
             return Json(CityVMList, JsonRequestBehavior.AllowGet);
 
         }
-        public SelectList StateWiseCityListType(int StateId)
+        public SelectList StateWiseCityListType(int? StateId)
         {
             int intStateId = Convert.ToInt32(StateId);
             var CityVMList = new List<CityViewModel>();
@@ -477,7 +668,50 @@ namespace BlueSpiral.Web.Areas.ShopOwner.Controllers
             SubMenuDetails = _context.Database.SqlQuery<SubMenu>(query).ToList();
             return Json(SubMenuDetails, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult GetOrderDetails(string OrdeNo)
+        {
+            List<OrderDetail> OrderDetails = null;
+            string query = "SELECT isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId=TRO.ProductId),'../../../Uploads/na.jpg') AS ImgUrl,TRP.product_name AS ProductName,TRO.Quantity,TRO.OrderType,TRO.FinalAmount as Price,TRO.VendorId FROM TR_Order AS TRO JOIN dbo.TR_Product TRP ON(TRO.ProductId = TRP.product_id)  WHERE TRO.OrderNo='" + OrdeNo + "'  ORDER BY  TRO.DateofPurchase";
+            OrderDetails = _context.Database.SqlQuery<OrderDetail>(query).ToList();
+            return Json(OrderDetails, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetTopCategories()
+        {
+            List<TopSubCategoryViewModel> vData = null;
+            string Query = "SELECT HandicraftSubCategory,HandicraftSubCategoryId,isnull(ImgUrl,'../../../Uploads/na.jpg') AS ImgUrl FROM MS_HandicraftSubCategory WHERE VisibilityStatus=1 ORDER by EntryDate DESC";
+            vData = _context.Database.SqlQuery<TopSubCategoryViewModel>(Query).ToList();
+            return Json(vData, JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpPost]
+        public JsonResult GetTopSaleCategories()
+        {
+            List<TopSubCategoryViewModel> vData = null;
+            string Query = "SELECT HandicraftSubCategory,HandicraftSubCategoryId,isnull(ImgUrl,'../../../Uploads/na.jpg') AS ImgUrl FROM dbo.Fun_GetMaxsaleCategories()";
+            vData = _context.Database.SqlQuery<TopSubCategoryViewModel>(Query).ToList();
+            return Json(vData, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ValidateWallet()
+        {
+            string UserId = Session["UserEmail"].ToString();
+            List<WalletAmount> vData = null;
+            string Query = "SELECT isnull(WalletAmount,0) AS Amount FROM TR_Users WHERE Email='" + UserId + "'";
+            vData = _context.Database.SqlQuery<WalletAmount>(Query).ToList();
+            return Json(vData, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult CartDetails()
+        {
+            string UserId = Session["UserEmail"].ToString();
+            List<CartListViewModel> vData = null;
+            string Query = "DECLARE @TotalItem DECIMAL(16,2)=( SELECT count(*) FROM dbo.TR_Cart TC    WHERE TC.UserId = '" + Session["UserEmail"].ToString() + "');     SELECT Tc.Id, TC.ProductId,TP.product_name AS ProductName,TP.moq_defence,TP.moq_shopkeeper, isnull((SELECT TOP 1 ImgUrl FROM TR_ProductImages WHERE ProductId = TC.ProductId),'../../../Uploads/na.jpg') AS ImgUrl, TC.Quantity * (TP.price_shopkeeper + isnull(TP.discount, 0)) AS SubPrice, TC.Quantity* isnull(TP.discount,0) AS Discount,   TC.Quantity* TP.price_shopkeeper AS Price ,TC.Quantity ,@TotalItem AS TotalAmount FROM dbo.TR_Cart TC  JOIN dbo.TR_Product TP ON(TC.ProductId = TP.product_id)  WHERE TC.UserId = '" + Session["UserEmail"].ToString()+ "'";
+            vData = _context.Database.SqlQuery<CartListViewModel>(Query).ToList();
+            return Json(vData, JsonRequestBehavior.AllowGet);
+        }
+        
 
 
 

@@ -3,6 +3,7 @@
     ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+<script src="~/css/styles.min.css"></script>
 <script src="~/Scripts/customizer/Menu.js"></script>
 <div class="container padding-top-3x padding-bottom-3x mb-1">
     <!-- Alert-->
@@ -26,91 +27,113 @@
                 {
                     foreach (var item in ViewBag.UserCart)
                     {
-                <tr>
-                    <td>
-                        <input type="hidden" id="hdnid" value="@item.Id" />
-                        <div class="product-item">
-                            <a class="product-thumb" href="SingleProduct/" @item.ProductId><img src=@item.ImgUrl alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="SingleProduct/" @item.ProductId>@item.ProductName</a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="count-input">
-                            <input type="number" class="form-control" id="quantity" inputmode="numeric" value="@item.Quantity" onblur="updatetocart();" />
-                        </div>
-                    </td>
-                    <td class="text-center text-lg text-medium">Rs-@item.SubPrice</td>
-                    <td class="text-center text-lg text-medium">Rs-@item.Discount</td>
-                    <td class="text-center text-lg text-medium">Rs-@item.Price</td>
-                    <td class="text-center"><a class="remove-from-cart" href="/ShopOwner/ShopOwner/RemoveCartOrder/@item.Id" ><i class="icon-cross"></i></a></td>
-                </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden" id="hdnid" value="@item.Id" />
+                                <div class="product-item">
+                                    <a class="product-thumb" href="SingleProduct/" @item.ProductId><img src=@item.ImgUrl alt="Product"></a>
+                                    <div class="product-info">
+                                        <h4 class="product-title"><a href="SingleProduct/" @item.ProductId>@item.ProductName</a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                                    </div>
+                                </div>
+                            </td>
+                            @if (Session["UserTypeId"].ToString() == "4")
+                            {
+                                <td class="text-center">
+                                    <div class="count-input">
+                                        <input type="number" class="form-control" id="quantity;@item.Quantity" inputmode="numeric" value="@item.Quantity" onblur="updatetocart('@item.moq_shopkeeper','@item.Id',this.value)" />
+                                    </div>
+                                </td>
+                            }
+                            @if (Session["UserTypeId"].ToString() == "5")
+                            {
+                                <td class="text-center">
+                                    <div class="count-input">
+                                        <input type="number" class="form-control" id="quantity;@item.Quantity" inputmode="numeric" value="@item.Quantity" onblur="updatetocart('@item.moq_defence','@item.Id',this.value);" />
+                                    </div>
+                                </td>
+                            }
+
+                            <td class="text-center text-lg text-medium">Rs-@item.SubPrice</td>
+                            <td class="text-center text-lg text-medium">Rs-@item.Discount</td>
+                            <td class="text-center text-lg text-medium">Rs-@item.Price</td>
+                            <td class="text-center"><a class="remove-from-cart" href="/ShopOwner/ShopOwner/RemoveCartOrder/@item.Id"><i class="icon-cross"></i></a></td>
+                        </tr>
                     }
                 }
-                        @*<tr>
-                    <td>
-                        <div class="product-item">
-                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/02.jpg" alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="shop-single.html">Daily Fabric Cap</a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="count-input">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option selected="">2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td class="text-center text-lg text-medium">Rs-24.89</td>
-                    <td class="text-center">—</td>
-                    <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="product-item">
-                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/03.jpg" alt="Product"></a>
-                            <div class="product-info">
-                                <h4 class="product-title"><a href="shop-single.html">Cole Haan Crossbody</a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="count-input">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </td>
-                    <td class="text-center text-lg text-medium">Rs-200.00</td>
-                    <td class="text-center">—</td>
-                    <td class="text-center"><a class="remove-from-cart" href="#" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="icon-cross"></i></a></td>
-                </tr>*@
-                    </tbody>
+
+            </tbody>
         </table>
     </div>
     <div class="shopping-cart-footer">
         <div class="column">
             @*<form class="coupon-form" method="post">
-                <input class="form-control form-control-sm" type="text" placeholder="Coupon code" required="">
-                <button class="btn btn-outline-primary btn-sm" type="submit">Apply Coupon</button>
-            </form>*@
+                    <input class="form-control form-control-sm" type="text" placeholder="Coupon code" required="">
+                    <button class="btn btn-outline-primary btn-sm" type="submit">Apply Coupon</button>
+                </form>*@
         </div>
-        <div class="column text-lg">Subtotal: <span class="text-medium">Rs-289.68</span></div>
+        <div class="row">
+            <div class="text-right col-sm-12 column text-lg">Subtotal: <span class="text-medium">Rs: @TempData["TotalAmount"]</span></div>
+            <div class="text-right col-sm-12 column text-lg">Packaging Charge: <span class="text-medium">Rs: @TempData["PackagingCharge"]</span></div>
+            <div class="text-right col-sm-12 column text-lg">Service Charge: <span  class="text-medium">Rs: @TempData["ServiceCharge"]</span></div>
+            <div class="text-right col-sm-12 column text-lg"><input type="checkbox" id="chkwallet" /> Use Wallet Amount: <input class="wallet-radius" type="text" id="txtwalletamount" value="0" onchange="CalcWalletDebit();" readonly /></div>
+            <div class="text-right col-sm-12 column text-lg">Grand Total(Rs.): <span id="spngrandtotal" class="text-medium"> @TempData["GrandTotalCharge"]</span></div>
+        </div>
+
     </div>
     <div class="shopping-cart-footer">
-        <div class="column"><a class="btn btn-outline-secondary btn-sm mod-btn text-white" href="shop-grid-ls.html"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
-        <div class="column"><button type="submit" class="btn btn-primary" onclick="PlaceOrder();">Place Order</button></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>Delivery Information</h4>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a title="New Address" href="Address?revert=cart"><img style="height: 40px;" src="~/Content/img/newaddress.png" /></a>
+            </div>
+        </div>
+        <div class="row">
+            @if (ViewBag.AddressList != null)
+            {
+                foreach (var item in ViewBag.AddressList)
+                {
+                    <div class="col-md-4 col-sm-6 mt-4 mb-4" id="div/@item.Id">
+                        <div class="coupon-form">
+                            <ul style="list-style:none;">
+                                <li class="two-address">Shop Name:</li>
+                                <li>@item.BusinessName</li>
+                                <li class="two-address">Address:</li>
+                                <li>@item.ContactAddress</li>
+                                <li class="two-address">State (City):</li>
+                                <li>@item.StateName (@item.CityName)</li>
+                                <li class="two-address">Pincode:</li>
+                                <li>@item.PinCode</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="btn btn-outline-primary btn-sm btn-block mb-0" type="submit" onclick="AssignDeliveryAddress(@item.Id);">Deliver to this Address</button>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href="Address/@item.Id?revert=cart">Modify</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-primary btn-sm btn-block" href="RemoveAdddress/@item.Id?revert=cart">Remove</a>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="shopping-cart-footer">
+        <div class="col-sm-6  column"><a class="btn btn-outline-secondary btn-sm mod-btn text-white" href="index2"><i class="icon-arrow-left"></i>&nbsp;Back to Shopping</a></div>
+        <input type="hidden" id="deliveryaddressid" />
+        @if (Convert.ToInt32(TempData["TotalAmount"]) >= 50000 && Session["UserTypeId"].ToString() == "5")
+        {
+            <div class="column"><button type="submit" class="btn btn-primary" onclick="PlaceOrder('Pending','Credit');">On Credit</button></div>
+        }
+        <div class="column"><button type="submit" class="btn btn-primary" onclick="PlaceOrder('Accept','Paid');">Place Order</button></div>
     </div>
     <!-- Related Products Carousel-->
     <h3 class="text-center padding-top-2x mt-2 padding-bottom-1x">You May Also Like</h3>
@@ -210,3 +233,21 @@
         </div><div class="owl-nav disabled"><div class="owl-prev"></div><div class="owl-next"></div></div><div class="owl-dots"><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div></div>
     </div>
 </div>
+<script>
+    $(function () {
+        $("#chkwallet").click(function () {
+            
+            var isChecked = $("#chkwallet").is(":checked");
+          
+            if (isChecked) {
+                $("#txtwalletamount").attr("readonly", false);
+            }
+            else {
+                $("#txtwalletamount").attr("readonly", true);
+            }
+        });
+    });
+    
+   
+    
+</script> 

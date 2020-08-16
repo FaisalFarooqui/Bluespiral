@@ -1,0 +1,602 @@
+﻿
+@{
+    ViewBag.Title = "helpcenter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 p-0" style="background: #fff;">
+
+        <section class="">
+            <div class="flexslider left">
+                <ul class="slides">
+                    <li>
+                        <img src="/Content/img/shop/helpimg.jpg">
+                        <div class="meta">
+                            <h1><img src="/Content/img/shop/self-servo.jpg" class="img-fluid" style="width:300px;"></h1>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <div class="col-sm-12">
+            <div class="row">
+                <ul class="ven-center">
+                    <li>
+                        <a href="#orders">
+                            <img src="/Content/img/shop/ship1.jpg" class="img-fluid">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#delivery">
+                            <img src="/Content/img/shop/ship2.jpg" class="img-fluid">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#pac-rules">
+                            <img src="/Content/img/shop/ship3.jpg" class="img-fluid">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#qa-photo">
+                            <img src="/Content/img/shop/ship4.jpg" class="img-fluid">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#earnings">
+                            <img src="/Content/img/shop/ship5.jpg" class="img-fluid">
+                        </a>
+                    </li>
+                </ul>
+                <!--<div class="col-sm-3 col-md-3 col-6 on-ships">
+                        <img src="/Content/img/shop/ship1.jpg" class="img-fluid">
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-6 on-ships">
+                        <img src="/Content/img/shop/ship2.jpg" class="img-fluid">
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-6 on-ships">
+                        <img src="/Content/img/shop/ship3.jpg" class="img-fluid">
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-6 on-ships">
+                        <img src="/Content/img/shop/ship4.jpg" class="img-fluid">
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-6 on-ships">
+                        <img src="/Content/img/shop/ship5.jpg" class="img-fluid">
+                    </div>-->
+            </div>
+        </div>
+        <div class="col-sm-12 mt-3">
+            <div class="col-sm-12" id="orders">
+                <h3 class="text-left mb-5 divider-titl pb-2 vender-ft">Orders</h3>
+            </div>
+        </div>
+        <div class="col-sm-12 faq">
+            <div class="p-2">
+                <div class="faq-list">
+                    <ul>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" class="collapse" href="#faq-list-1">
+                                List Products on TBS.
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-1" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    You can go to Request Product page and add the product by clicking on Add new Product at the right bottom (Page link) or, you can contact us; our team will help you to list your products on TBS.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-2" class="collapsed">
+                                Start Receiving Orders
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    As your products go Live on the app, you will start receiving orders.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-3" class="collapsed">
+                                Is my Order confirmed?
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-3" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    Once the buyer places the order, you will receive a notification on your account, an email on your registered email id and along with that our team will also send you the requirements on your registered phone no.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-4" class="collapsed">
+                                Sample Order
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-4" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    Buyers like to order samples first before placing the final order. Please provide separate price of the sample piece and keep us updated for the sample product availability.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-5" class="collapsed">
+                                Manage Stock
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-5" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    We request you to update your stock in every 2 days for our convenience. Please visit Request product page to update the stock (link). Or, you can contact us; our team helps you to update product stock on TBS
+                                </p>
+
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-6" class="collapsed">
+                                How do I cancel an order?
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-6" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    If you have any issues while accepting any order or due to any reason you cannot complete any existing order, we can totally understand, please cancel within 6 hours or contact our team as soon as possible, because we have to keep our commitment towards our buyers.
+                                </p>
+
+                            </div>
+                        </li>
+
+
+
+                        <li class="return-ex mt-5" id="delivery">
+                            <h3 class="text-left mb-5 divider-titl pb-2 vender-ft">Delivery</h3>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" class="collapsed" href="#faq-list-11">
+                                When will the order gets picked up?
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-11" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    One of our executive from quality assurance team will visit when the order is completed from your end and check the quality of the products. Once the quality is assured, you will be asked to pack the products as per the standard packaging rules. All you need to do is pack the product and we will do the rest
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-12" class="collapsed">
+                                Delivery Handled by TBS
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-12" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    We offer quick and convenient pick-up and delivery across India through our logistics partners! All you need to do is pack the product
+                                </p>
+                            </div>
+                        </li>
+                        <li class="return-ex mt-5" id="pac-rules">
+                            <h3 class="text-left mb-5 divider-titl pb-2 vender-ft">Packaging Rules  </h3>
+                        </li>
+                        <li>
+                            <i class="fa fa-bullseye icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-pac" class="collapsed">
+                                Every individual product should be tagged with the tags provided by uaas.
+                               
+                            </a>
+                            
+                        </li>
+                        <li>
+                            <i class="fa fa-bullseye icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-pac1" class="collapsed">
+                                The individual product will be wrapped in plastic wrap and then in bubble wrap.
+                               
+                               
+                            </a>
+                           
+                        </li>
+                        <li>
+                            <i class="fa fa-bullseye icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-pac2" class="collapsed">
+                                The product should be packed in an individual box.
+                               
+                            </a>
+                           
+                        </li>
+                        <li class="return-ex mt-5" id="qa-photo">
+                            <h3 class="text-left mb-5 divider-titl pb-2 vender-ft">Quality Assurance & Photography </h3>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-31" class="collapsed">
+                                Product Photography
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-31" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    All you have to do is to keep your products ready; we will take care of the product photography.
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-32" class="collapsed">
+                                Quality Assurance
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-32" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    Our QA team will visit to check the quality of the products, if the product does not fall under our criterion, it will be rejected.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="return-ex mt-5" id="earnings">
+                            <h3 class="text-left mb-5 divider-titl pb-2 vender-ft">Earnings  </h3>
+                        </li>
+                        <li>
+                            <i class="fa fa-question-circle icon-help"></i>
+                            <a data-toggle="collapse" href="#faq-list-qa" class="collapsed">
+                                Receive Earnings
+                                <i class="fa fa-angle-down icon-show"></i>
+                                <i class="fa fa-angle-up icon-close"></i>
+                            </a>
+                            <div id="faq-list-qa" class="collapse" data-parent=".faq-list">
+                                <p>
+                                    Payments are directly deposited to your bank account within 7 days of picking up the orders.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--<section class="padding-bottom-1x">
+        <div class="container">
+            <h3 class="text-left mb-5 divider-titl pb-2">Shipping</h3>
+        </div>
+    </section>-->
+        <!--<section class="faq">
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="faq-list">
+                        <ul>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" class="collapse" href="#faq-list-1">
+                                    Is my order confirmed?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-1" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You will receive an email and an sms on order confirmation. Please contact our helpdesk (mail  support@thebluespiral.com ) if you are unsure.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-2" class="collapsed">
+                                    When will you ship my order?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        We normally ship all orders within 2 business days. Final delivery time will vary based on location.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-3" class="collapsed">
+                                    When will my order get delivered?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-3" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Transit and delivery time may vary depending on your location and the ordered items. You can check estimated delivery time for your pincode on any product page.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-4" class="collapsed">
+                                    How much do you charge for delivery?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-4" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Free shipping on all orders above Rs.995. An additional charge of Rs. 50 will be levied on orders below that.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-5" class="collapsed">
+                                    How can I track my order?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-5" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        An email is sent to you after the order is shipped. It contains the tracking number and details of the service provider. You can also track your order by clicking on the option Track Order on our website after logging in.
+                                    </p>
+                                    <p>
+                                        If you are having trouble reading the emails or if you haven't received any updates, please get in touch with our Helpdesk immediately. Drop us an email at support@thebluespiral.com (9.00 am - 8.00 pm, Monday to Friday &amp; 10.00 am - 6.00 pm, Saturday).
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-6" class="collapsed">
+                                    How do I place Bulk Orders?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-6" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        We get it. Our products are simply awesome and buying one is just not enough. You can place bulk orders by visiting us at our Bulk orders page or by contacting us via support@thebluespiral.com (9.00 am - 8.00 pm, Monday to Friday &amp; 10.00 am - 6.00 pm, Saturday).
+                                    </p>
+                                    <p>
+                                        Note: <br>
+                                        We do not offer customization of products.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-7" class="collapsed">
+                                    Can I have my order gift-wrapped?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-7" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Yes, you can! Gift wrap option is available for most products, and you will see this option during checkout, before you sign in. Please note that as per government mandate, we will have to send across the invoice with all shipments.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-8" class="collapsed">
+                                    I don’t want the package to carry an invoice/amount as it is a gift. Can this be done?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-8" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Unfortunately, invoices are mandatory due to Government regulations.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-9" class="collapsed">
+                                    I have received a damaged product, what should I do?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-9" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        In the event that you receive a damaged product, please initiate a return or reach out to us on support@thebluespiral.com and we will resolve the issue to your satisfaction.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="return-ex mt-5">
+                                <h3 class="text-left mb-5 divider-titl pb-2">Returns &amp; Exchanges</h3>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" class="collapsed" href="#faq-list-11">
+                                    How do I cancel an order?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-11" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You can cancel an order, that has not yet been shipped, from "My Account" or "Track Order" sections of our website. Or, you can send a request to support@thebluespiral.com. After order has been shipped, it cannot be cancelled and the return policy mentioned below is applicable.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-12" class="collapsed">
+                                    What is your return policy?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-12" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You can return certain products, up to 14 days from the date of delivery, from "My Orders" or "Track Order" section of our website. Or, you can send a request to support@thebluespiral.com.
+                                        The returned product should be in its original packaging and in the same unused and unwashed condition as received.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-13" class="collapsed">
+                                    What items can I return?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-13" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You can return all items except personal care items, furniture, popsockets, wall prints &amp; frames and bodysuits. Returns for these will be accepted only for damaged / defective products. You will need to inform us of any damages / defects within 48 hours of delivery of the product, in order to receive the replacement.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-14" class="collapsed">
+                                    Do you arrange for reverse pickups?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-14" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Reverse pickup is applicable only for a selected set of pincodes. You can check if your pincode has this facility in "My Orders" or "Track Order" section of our website, or by contacting support@thebluespiral.com. If your pincode doesn't have reverse pickup facility, you will have to ship the item back.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-15" class="collapsed">
+                                    Where do I mail the returns?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-15" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Please mail the item(s) to the address below. Do remember to mention your order number and contact number!
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-16" class="collapsed">
+                                    When will I receive a replacement?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-16" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Replacement will be shipped after the original item has been received in the warehouse, subject to the following conditions:
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-circle"></i>  The item(s) should be unused, unsoiled and unwashed.
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-circle"></i>  The packaging should have the original tags in place.
+                                    </p>
+                                    <p>
+                                        They should be returned within 14 days from the dispatch date.
+                                    </p>
+                                    <p>
+                                        Any returned item received by us that does not meet the above mentioned conditions will not be accepted. No amount will be reimbursed in this case.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-17" class="collapsed">
+                                    Can I get my to-be-returned-product to get picked up from a different address from the existing delivery address?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-17" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Sure. But the pick up address needs to be in our list of viable pincodes. You can check this in "My Account" or "Track Order" section of our website.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-18" class="collapsed">
+                                    Can I choose a different item in exchange?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-18" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You can only exchange your item within 20 days and receive a replacement of that exact product or another product of the same value. If the value of the replacement product exceeds that of the previously purchased product, the difference will have to be paid in advance.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-19" class="collapsed">
+                                    What is your refund policy?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-19" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        You can choose for refund to the original payment source or to your wallet which can be used on subsequent purchases on thebluespiral.com
+                                    </p>
+                                    <p>
+                                        For orders where reverse pick-up may not apply, customers can self ship the items to BlueSpiral. In this case, an amount of Rs. 100 will be reimbursed through a voucher. This will be done post the quality check of all received items.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="return-ex mt-5">
+                                <h3 class="text-left mb-5 divider-titl pb-2">Rewards &amp; Cashback</h3>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" class="collapse" href="#faq-list-31">
+                                    How to earn Points?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-31" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-question-circle icon-help"></i>
+                                <a data-toggle="collapse" href="#faq-list-32" class="collapsed">
+                                    How to spend points?
+                                    <i class="fa fa-angle-down icon-show"></i>
+                                    <i class="fa fa-angle-up icon-close"></i>
+                                </a>
+                                <div id="faq-list-32" class="collapse" data-parent=".faq-list">
+                                    <p>
+                                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="padding-top-2x  padding-bottom-1x">
+            <div class="container">
+                <h3 class="text-left mb-5 divider-titl pb-2">Contact Us</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="emailcon mt-4 mb-4">
+                            <i class="fa fa-envelope"></i>
+                            <h4>Email:</h4>
+                            <p>
+                                <a class="navi-link-light" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=support@thebluespiral.com&amp;body=Thank You for choosing us. Please provide your content" target="_blank" style="color: #163967;">
+                                    support@thebluespiral.com
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="emailcon mt-4 mb-4">
+                            <i class="fa fa-phone"></i>
+                            <h4>Call Us:</h4>
+                            <p>
+                                <a href="tel:+91 8585858585">+91 8585858585</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>-->
+        <section class="padding-top-1x mr-5 mb-5 text-right">
+            <a class="btn btn-outline-secondary btn-sm mod-btn text-white" href="front.html">
+                <i class="icon-arrow-left"></i> Back&nbsp;
+            </a>
+        </section>
+
+    </div>

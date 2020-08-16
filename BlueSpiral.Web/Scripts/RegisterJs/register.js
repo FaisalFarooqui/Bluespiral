@@ -1,5 +1,5 @@
-﻿ function StateWiseCity() {
-      var StateId = $('#StateId').val();
+﻿function StateWiseCity() {
+     var StateId = $('#StateId').val();
     $.ajax({
         url: '/Account/StateWiseCityList/',
         type: "GET",
@@ -14,7 +14,10 @@
             $.each(cities, function (i, city) {
                 $("#City").append(
                     $('<option></option>').val(city.CityId).html(city.CityName));
-            });
+              });
+              if ($("#hdnCityId").val() != null) {
+                  $("#City").val($("#hdnCityId").val());
+              }
           },
           error: function()
           {
@@ -24,6 +27,7 @@
 }
 
 function CategoryWiseSubCategory() {
+    debugger;
     var CategoryId = $('#HandicraftCategoryId').val();
     $.ajax({
         url: '/ControlPanel/ControlPanel/CategoryWiseSubcategoryList/',
@@ -40,6 +44,9 @@ function CategoryWiseSubCategory() {
                 $("#SubCategory").append(
                     $('<option></option>').val(subcategory.HandicraftSubCategoryId).html(subcategory.HandicraftSubCategory));
             });
+            if ($("#hdnsubcategory").val() != null) {
+                $("#SubCategory").val($("#hdnsubcategory").val());
+            }
         },
         error: function () {
             //OnError();

@@ -3,14 +3,17 @@
     ViewBag.Title = "Address";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+<script src="~/Scripts/RegisterJs/register.js"></script>
 <div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
     <div id="address" class="tabcontent" style="display: block;">
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <input type="hidden" id="hdnCityId" />
         <h4>Contact Address</h4>
         <hr class="padding-bottom-1x">
         @Html.ValidationSummary("", new { @class = "text-danger" })
         @using (Html.BeginForm("Address", "ShopOwner", FormMethod.Post, new { @class = "row", role = "form", @id = "buyer", enctype = "multipart/form-data" }))
         {
+            //@Html.HiddenFor(m=>m.AddressId)
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="account-company">Shop Name</label>
@@ -28,7 +31,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>City</label>
-                    @Html.DropDownListFor(m => m.CityId, ViewBag.City as SelectList, "Choose City", new { @class = "form-control", @id = "City" })
+                    @Html.DropDownListFor(m => m.CityId, new SelectList(Enumerable.Empty<SelectListItem>(), "CityId", "CityName"), "Choose City", new { @class = "form-control", @id = "City" })
                     @Html.ValidationMessageFor(model => model.CityId, null, new { @class = "text-danger" })
                 </div>
             </div>
@@ -39,26 +42,84 @@
                     @Html.ValidationMessageFor(model => model.Pincode, null, new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="account-address1">Address</label>
                     @Html.TextBoxFor(m => m.ContactAddress, new { @class = "form-control", @type = "text" })
                     @Html.ValidationMessageFor(model => model.ContactAddress, null, new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="account-address2">Alternative Address</label>
-                    <input class="form-control" type="text" id="account-address2">
-                </div>
-            </div>
+            @*<div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-address2">Alternative Address</label>
+                        <input class="form-control" type="text" id="account-address2">
+                    </div>
+                </div>*@
             <div class="col-12 padding-top-1x">
                 <hr class="margin-top-1x margin-bottom-1x">
                 <div class="text-right">
-                    <button class="btn btn-primary margin-bottom-none" type="submit">Update Address</button>
+                    <button class="btn btn-primary margin-bottom-none" type="submit">Save Address</button>
                 </div>
             </div>
         }
     </div>
+
+    <div id="order" class="tabcontent" style="display: block;">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <h4>Address List </h4>
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <div class="table-responsive">
+            <table class="table table-hover margin-bottom-none">
+                <thead>
+                    <tr>
+                        <th>Shop</th>
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Pincode</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.AddressList != null)
+                    {
+                        foreach (var item in ViewBag.AddressList)
+                        {
+
+
+                            <tr>
+                                <td>@item.BusinessName</td>
+                                <td>@item.ContactAddress</td>
+
+                                <td>@item.StateName</td>
+                                <td><span class="text-danger">@item.CityName</span></td>
+                                <td><span class="text-medium">@item.PinCode</span></td>
+                                <td>
+                                    <a href="/ShopOwner/ShopOwner/Address/@item.Id" class="elements"><i class="fa fa-edit  action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Edit"></i></a>
+
+                                    <a href="/ShopOwner/ShopOwner/RemoveAdddress/@item.Id" class="elements"><i class="fa fa-trash action-icon action-icon" aria-hidden="true" data-toggle="tooltip" title="Remove"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Order Details</a></div>
     </div>
-    @Scripts.Render("~/register/js");
+</div>
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        $("#hdnCityId").val(@ViewBag.JavaScriptFunction);
+        StateWiseCity();
+    </script>
+}
+@if (TempData["Message"] != null)
+{
+    <script>alert("@TempData["Message"]");</script>
+}
+@Scripts.Render("~/register/js");

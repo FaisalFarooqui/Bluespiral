@@ -3,13 +3,14 @@
     ViewBag.Title = "SubCategory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
 
 <div class="tabcontent">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     <h4>Category</h4>
     <hr class="padding-bottom-1x">
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    @using (Html.BeginForm("SubCategory", "ControlPanel", FormMethod.Post, new { role = "form" }))
+    @using (Html.BeginForm("SubCategory", "ControlPanel", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
     {
         <div class="col-md-12">
             <div class="form-group">
@@ -22,6 +23,18 @@
             <div class="form-group">
                 <label for="account-fn"> Sub Category Name</label>
                 @Html.TextBoxFor(m => m.HandicraftSubCategory, new { @class = "form-control", @placeholder = "Sub Category Name" })
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Picture</label>
+                <input type="file" name="ImageFile" class="file" required="" />
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                    <span class="input-group-btn">
+                        <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="col-12 padding-bottom-1x">
@@ -37,7 +50,7 @@
     <h4>Sub Caregory List</h4>
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     <div class="table-responsive">
-        <table class="table table-hover margin-bottom-none">
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example3" cellspacing="0" style="width:100%">
             <thead>
                 <tr>
                     <th>Sr. No.</th>
@@ -51,18 +64,18 @@
                 {
                     foreach (var item in ViewBag.SubCategory)
                     {
-                <tr>
-                    <td><a class="text-medium navi-link">1</a></td>
-                    <td>@item.HandicraftCategory</td>
-                    <td>@item.HandicraftSubCategory</td>
-                    <td>
-                        <a href="/ControlPanel/ControlPanel/RemoveSubCategory/@item.HandicraftSubCategoryId">   <i class="fa fa-trash action-icon mr-1"></i> </a>
-                          
-                            <i class="fa fa-edit action-icon mr-1"></i>
-                      
-</td>
-                    @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
-                </tr>
+                        <tr>
+                            <td><a class="text-medium navi-link">1</a></td>
+                            <td>@item.HandicraftCategory</td>
+                            <td>@item.HandicraftSubCategory</td>
+                            <td>
+                                <a href="/ControlPanel/ControlPanel/RemoveSubCategory/@item.HandicraftSubCategoryId">   <i class="fa fa-trash action-icon mr-1"></i> </a>
+
+                                <i class="fa fa-edit action-icon mr-1"></i>
+
+                            </td>
+                            @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
+                        </tr>
                     }
                 }
 
@@ -75,3 +88,33 @@
 </div>
 
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+
+@Scripts.Render("~/register/js");
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example3').DataTable(
+
+            {
+
+                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "iDisplayLength": 5
+            }
+        );
+    });
+
+
+    function checkAll(bx) {
+        var cbs = document.getElementsByTagName('input');
+        for (var i = 0; i < cbs.length; i++) {
+            if (cbs[i].type == 'checkbox') {
+                cbs[i].checked = bx.checked;
+            }
+        }
+    }
+</script>

@@ -1,0 +1,145 @@
+﻿@model BlueSpiral.Core.ViewModel.SupplierDetails
+@{
+    ViewBag.Title = "getprofile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="hidden-lg-up"></div>
+<div class="text-right">
+    <a class="btn btn-outline-secondary btn-sm mod-btn text-white" href="/ControlPanel/ControlPanel/UserList/3">
+        <i class="icon-arrow-left"></i> Back&nbsp;
+    </a>
+</div>
+<div class="tabcontent">
+    
+    <h5 class="new-collection how-work text-center">
+        My Profile
+    </h5>
+    <hr class="padding-bottom-1x">
+    <div class="row p-1">
+        @if (ViewBag.SupplierList != null)
+        {
+            foreach (var item in ViewBag.SupplierList)
+            {
+
+                <div class="col-md-12 mb-3">
+                    <img src="@item.ImagePath" class="img-fluid" style="border-radius:50%">
+                </div>
+                <div class="col-md-12 profile-ul">
+                    <div class="content d-flex flex-column justify-content-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">User Type:</span>
+                                        <span class="pr-sub">@item.Users</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Name:</span>
+                                        <span class="pr-sub">@item.FName</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Phone No.:</span>
+                                        <span class="pr-sub">@item.ContactNo</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Address:</span>
+                                        <span class="pr-sub">@item.ContactAddress </span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">City:</span>
+                                        <span class="pr-sub">@item.CityName</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">GST:</span>
+                                        <span class="pr-sub">@item.GSTNo</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">PAN:</span>
+                                        <span class="pr-sub">@item.PanNo</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Email:</span>
+                                        <span class="pr-sub">@item.Email</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Business/ShopName.:</span>
+                                        <span class="pr-sub">@item.BusinessName</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">State</span>
+                                        <span class="pr-sub">@item.StateName</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Pincode</span>
+                                        <span class="pr-sub">@item.Pincode</span>
+                                    </li>
+                                    @if (@item.Users == "Defence")
+                                    {
+                                        <li>
+                                            <i class="fa fa-angle-right"></i>
+                                            <span class="pro-dash">Regiment:</span>
+                                            <span class="pr-sub">@item.REGIMENT</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="mt-0">
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">Pan Scan Copy:</span>
+                                        <div class="col-sm-12 mt-3 mb-3">
+                                            <img src="@item.PanScanPath" class="img-fluid img-dash">
+                                        </div>
+                                    </li>
+                                    @if (@item.Users == "Supplier")
+                                    {
+                                        <li>
+                                            <i class="fa fa-angle-right"></i>
+                                            <span class="pro-dash">Canceled Cheque:</span>
+                                            <div class="col-sm-12 mt-3 mb-3">
+                                                <img src="@item.CanChqPath" class="img-fluid img-dash">
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="mt-0">
+                                    <li>
+                                        <i class="fa fa-angle-right"></i>
+                                        <span class="pro-dash">GST Scan Copy:</span>
+                                        <div class="col-sm-12 mt-3 mb-3">
+                                            <img src="@item.GSTScanPath" class="img-fluid img-dash">
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    </div>
+</div>
+

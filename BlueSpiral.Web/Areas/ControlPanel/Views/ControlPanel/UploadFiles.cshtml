@@ -2,28 +2,46 @@
     ViewBag.Title = "UploadFiles";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<script src="~/Scripts/customizer/Menu.js"></script>
+
 <div class="tabcontent">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     <h4>UploadFiles</h4>
     <hr class="padding-bottom-1x">
     @using (Html.BeginForm("UploadFiles", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        <div class="col-sm-12">
+            @if (ViewBag.ImageList != null)
+            {
+                foreach (var item in ViewBag.ImageList)
+                {
 
-    <input type="file" multiple name="files" value="Browse" class="file" required=""/>
-    <div class="input-group col-xs-12">
-        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
-        <span class="input-group-btn">
-            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
-        </span>
-    </div>
-    <br />
-    <input type="submit" value="Upload" />
-    if (ViewBag.UploadSuccess == true)
-    {
-    <span>Upload Completed Successfully</span>
+                    <div class="item mr-4" style="position: relative;padding-top: 20px;display: inline-block;">
+                        <a href="#" onclick="RemoveImage(@item.ImgId)">
+                            <span class="notify-badge">
+                                <img src="../../../Uploads/remove.png" style="position: absolute;right: -26px;top: 2px;padding: 5px 10px;width: 50px;">
+                            </span>
+                        </a><label class="badge-job" style="padding: 12px;border: 1px solid blue;"><img src="@item.ImgUrl" width="50" height="50" /></label>
+                    </div>
+                }
+            }
+        </div>
+
+        <input type="file" multiple name="files" value="Browse" class="file" required="" />
+        <div class="input-group col-xs-12">
+            <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+            <span class="input-group-btn">
+                <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+            </span>
+        </div>
+        <br />
+        <input type="submit" value="Upload" />
+        if (ViewBag.UploadSuccess == true)
+        {
+            <span>Upload Completed Successfully</span>
+        }
+
     }
 
-    }
-    
 </div>
 

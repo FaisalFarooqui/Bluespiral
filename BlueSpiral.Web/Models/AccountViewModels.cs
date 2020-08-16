@@ -62,6 +62,7 @@ namespace BlueSpiral.Web.Models
         public bool RememberMe { get; set; }
 
         public int UserTypeId { get; set; }
+        public bool Status { get; set; }
     }
 
     public class RegisterViewModel

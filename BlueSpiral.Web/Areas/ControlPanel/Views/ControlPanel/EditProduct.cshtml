@@ -1,0 +1,101 @@
+﻿@model BlueSpiral.Web.Areas.ControlPanel.Models.Product
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@Html.ValidationSummary("", new { @class = "text-danger" })
+@using (Html.BeginForm("Product", "ControlPanel", FormMethod.Post, new { role = "form" }))
+{
+
+    <form class="w3-container">
+        <div class="row m-0">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Category Name</label>
+                    @Html.DropDownListFor(m => m.HandicraftCategoryId, ViewBag.Category as SelectList, "Choose Category", new { @class = "form-control", @id = "HandicraftCategoryId", @onchange = "CategoryWiseSubCategory()" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Sub Category Name</label>
+                    @Html.DropDownListFor(m => m.HandicraftSubCategoryId, new SelectList(Enumerable.Empty<SelectListItem>(), "HandicraftSubCategoryId", "HandicraftSubCategory"), "Choose SubCategory", new { @class = "form-control", @id = "SubCategory" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="account-fn">Product Name</label>
+                    @Html.TextBoxFor(m => m.product_name, new { @class = "form-control", @placeholder = "Product Name" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="account-fn">Product Description</label>
+                    @Html.TextBoxFor(m => m.product_description, new { @class = "form-control", @placeholder = "Product Description" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn">Size</label>
+                    @Html.TextBoxFor(m => m.product_size, new { @class = "form-control", @placeholder = "Size" })
+                </div>
+            </div>
+            @if (Convert.ToInt32(Session["UserTypeId"]) == 1)
+            {
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-fn"> Price for Defence</label>
+                        @Html.TextBoxFor(m => m.price_defence, new { @class = "form-control", @placeholder = "Price for Defence", @type = "number" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-fn"> Discount</label>
+                        @Html.TextBoxFor(m => m.discount, new { @class = "form-control", @placeholder = "Discount", @type = "number" })
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="account-fn"> MOQ for Defence</label>
+                        @Html.TextBoxFor(m => m.moq_defence, new { @class = "form-control", @placeholder = "MOQ for Defence", @type = "number" })
+                    </div>
+                </div>
+            }
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Price</label>
+                    @Html.TextBoxFor(m => m.price_shopkeeper, new { @class = "form-control", @placeholder = "Price for Shopkeeper", @type = "number" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> MOQ</label>
+                    @Html.TextBoxFor(m => m.moq_shopkeeper, new { @class = "form-control", @placeholder = "MOQ for Shopkeeper", @type = "number" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> Total In Stock</label>
+                    @Html.TextBoxFor(m => m.product_stock, new { @class = "form-control", @placeholder = "Total In Stock", @type = "number" })
+                </div>
+            </div>
+            <div class="col-12 padding-bottom-1x">
+                <hr class="mt-2 mb-3">
+                <div class="text-right">
+                    <button class="btn btn-primary margin-right-none" type="submit">Add</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+}
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        document.getElementById('id01').style.display = 'block';
+
+    </script>
+}
+

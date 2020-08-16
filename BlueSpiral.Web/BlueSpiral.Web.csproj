@@ -90,6 +90,36 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.DataVisualization.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.Design.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2015.12.0.2.2403\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Razorpay.3.0.0\lib\net45\Razorpay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -152,9 +182,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -204,29 +231,53 @@
     <Compile Include="Areas\ControlPanel\Controllers\ControlPanelController.cs" />
     <Compile Include="Areas\ControlPanel\ControlPanelAreaRegistration.cs" />
     <Compile Include="Areas\ControlPanel\Models\ControlPanelViewModel.cs" />
+    <Compile Include="Areas\ShopOwner\Charge.aspx.cs">
+      <DependentUpon>Charge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\ShopOwner\Charge.aspx.designer.cs">
+      <DependentUpon>Charge.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\ShopOwner\Controllers\ShopOwnerController.cs" />
     <Compile Include="Areas\ShopOwner\Models\ShopOwnerViewModel.cs" />
+    <Compile Include="Areas\ShopOwner\Payment.aspx.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Areas\ShopOwner\Payment.aspx.designer.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\ShopOwner\ShopOwnerAreaRegistration.cs" />
-    <Compile Include="Areas\Supplier\Controllers\SupplierController.cs" />
-    <Compile Include="Areas\Supplier\SupplierAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="dsInvoice.Designer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="PrintInvoice.aspx.cs">
+      <DependentUpon>PrintInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrintInvoice.aspx.designer.cs">
+      <DependentUpon>PrintInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\ShopOwner\Charge.aspx" />
+    <Content Include="Areas\ShopOwner\img\shop\making-craft.jpg" />
+    <Content Include="Areas\ShopOwner\img\shop\transdeal.PNG" />
+    <Content Include="Areas\ShopOwner\Payment.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cssStyle\dataTables.bootstrap.min.css" />
     <Content Include="Content\cssStyle\style.css" />
     <Content Include="Content\cssStyle\styles.min.css" />
+    <Content Include="Content\cssStyle\styles.minold.css" />
     <Content Include="Content\cssStyle\vendor.min.css" />
     <Content Include="Content\customizer\customizer.min.css" />
     <Content Include="Content\img\1.PNG" />
@@ -386,6 +437,7 @@
     <Content Include="Content\img\mega-menu-home\12.jpg" />
     <Content Include="Content\img\mega-menu-home\4.jpg" />
     <Content Include="Content\img\MODULUS IIT ALWAR217.mp4" />
+    <Content Include="Content\img\newaddress.png" />
     <Content Include="Content\img\offer.png" />
     <Content Include="Content\img\offer1.jpg" />
     <Content Include="Content\img\offer2.jpg" />
@@ -397,6 +449,7 @@
     <Content Include="Content\img\preloader.gif" />
     <Content Include="Content\img\Preloader_2.gif" />
     <Content Include="Content\img\Preloader_3.gif" />
+    <Content Include="Content\img\Print.png" />
     <Content Include="Content\img\regis-bg.png" />
     <Content Include="Content\img\reviews\01.jpg" />
     <Content Include="Content\img\reviews\02.jpg" />
@@ -408,6 +461,11 @@
     <Content Include="Content\img\shape4.PNG" />
     <Content Include="Content\img\shape41.png" />
     <Content Include="Content\img\shape5.png" />
+    <Content Include="Content\img\shop\ship1.jpg" />
+    <Content Include="Content\img\shop\ship2.jpg" />
+    <Content Include="Content\img\shop\ship3.jpg" />
+    <Content Include="Content\img\shop\ship4.jpg" />
+    <Content Include="Content\img\shop\ship5.jpg" />
     <Content Include="Content\img\shop\10.jpg" />
     <Content Include="Content\img\shop\11.jpg" />
     <Content Include="Content\img\shop\12.jpg" />
@@ -593,6 +651,7 @@
     <Content Include="js\card.min.js" />
     <Content Include="js\easing.min.js" />
     <Content Include="js\hoverIntent.js" />
+    <Content Include="js\jquery-confirm.min.css" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.ajaxchimp.min.js" />
     <Content Include="js\jquery.flexslider-min.js" />
@@ -612,6 +671,7 @@
     <Content Include="js\vendor\jquery-2.2.4.min.js" />
     <Content Include="js\xzoom.min.js" />
     <Content Include="js\zoomsl.js" />
+    <Content Include="PrintInvoice.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -619,7 +679,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Supplier\Views\web.config" />
     <Content Include="Areas\ShopOwner\Views\web.config" />
     <Content Include="Areas\ShopOwner\Views\_ViewStart.cshtml" />
     <Content Include="Areas\ShopOwner\Views\Shared\_Layout.cshtml" />
@@ -632,7 +691,6 @@
     <Content Include="Areas\ShopOwner\Views\ShopOwner\PaymentDetails.cshtml" />
     <Content Include="Areas\ShopOwner\Views\ShopOwner\Wallet.cshtml" />
     <Content Include="Areas\ShopOwner\Views\ShopOwner\Logout.cshtml" />
-    <Content Include="Areas\Supplier\Views\Supplier\Welcome.cshtml" />
     <Content Include="Areas\ControlPanel\Views\web.config" />
     <Content Include="Areas\ControlPanel\Views\ControlPanel\Welcome.cshtml" />
     <Content Include="Areas\ControlPanel\Views\ControlPanel\Category.cshtml" />
@@ -655,6 +713,51 @@
     <Content Include="css\main.css.map" />
     <Content Include="css\main.map" />
     <Content Include="js\.DS_Store" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\OrderList.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\EditProduct.cshtml" />
+    <Content Include="fonts\feather-webfont.eot" />
+    <Content Include="fonts\feather-webfont.svg" />
+    <Content Include="fonts\feather-webfont.ttf" />
+    <Content Include="fonts\feather-webfont.woff" />
+    <Content Include="fonts\feather-webfontd41d.eot" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\Linearicons-Free.eot" />
+    <Content Include="fonts\Linearicons-Free.svg" />
+    <Content Include="fonts\Linearicons-Free.ttf" />
+    <Content Include="fonts\Linearicons-Free.woff" />
+    <Content Include="fonts\Linearicons-Free.woff2" />
+    <Content Include="fonts\Pe-icon-7-strokebb1d.eot" />
+    <Content Include="fonts\Pe-icon-7-strokebb1d.svg" />
+    <Content Include="fonts\Pe-icon-7-strokebb1d.ttf" />
+    <Content Include="fonts\Pe-icon-7-strokebb1d.woff" />
+    <Content Include="fonts\Pe-icon-7-stroked41d.eot" />
+    <Content Include="fonts\socicon.eot" />
+    <Content Include="fonts\socicon.svg" />
+    <Content Include="fonts\socicon.ttf" />
+    <Content Include="fonts\socicon.woff" />
+    <Content Include="fonts\socicond41d.eot" />
+    <Content Include="Areas\ShopOwner\Views\ShopOwner\latestproduct.cshtml" />
+    <Content Include="Areas\ShopOwner\Views\ShopOwner\helpcenter.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\UploadFiles.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\getprofile.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\Contact.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\helpcenter.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\Profile.cshtml" />
+    <Content Include="Areas\ShopOwner\Views\ShopOwner\Category.cshtml" />
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\CashBack.cshtml" />
+    <Content Include="dsInvoice.xsc">
+      <DependentUpon>dsInvoice.xsd</DependentUpon>
+    </Content>
+    <Content Include="Areas\ControlPanel\Views\ControlPanel\CreditWallet.cshtml" />
+    <None Include="dsInvoice.xsd" />
+    <Content Include="dsInvoice.xss">
+      <DependentUpon>dsInvoice.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\customizer\customizer.min.js" />
@@ -677,6 +780,22 @@
     <Content Include="Uploads\bgppe.jpg" />
     <Content Include="Uploads\bgppee.jpg" />
     <Content Include="Uploads\bgppeee.jpg" />
+    <Content Include="Uploads\daily-sale.JPG" />
+    <Content Include="Uploads\dailyslider1.jpg" />
+    <Content Include="Uploads\dailyslider2.jpg" />
+    <Content Include="Uploads\dailysp.png" />
+    <Content Include="Uploads\dailyspn.PNG" />
+    <Content Include="Uploads\decore-right.png" />
+    <Content Include="Uploads\making-craft.jpg" />
+    <Content Include="Uploads\na.jpg" />
+    <Content Include="Uploads\new.jpg" />
+    <Content Include="Uploads\new2.jpg" />
+    <Content Include="Uploads\new3.jpg" />
+    <Content Include="Uploads\new4.jpg" />
+    <Content Include="Uploads\new5.jpg" />
+    <Content Include="Uploads\new6.jpg" />
+    <Content Include="Uploads\remove.png" />
+    <Content Include="Uploads\slider-01-01.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -690,9 +809,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
@@ -706,15 +822,11 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Account\VendorApplication.cshtml" />
     <Content Include="Views\Account\VendorRegister.cshtml" />
-    <Content Include="Views\Shared\_VendorLayout.cshtml" />
     <Content Include="Views\Shared\_CustomerLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ControlPanel\Views\Shared\" />
-    <Folder Include="Areas\ShopOwner\img\" />
-    <Folder Include="Areas\Supplier\Models\" />
-    <Folder Include="Areas\Supplier\Views\Shared\" />
     <Folder Include="Content\fonts\" />
     <Folder Include="UserImages\" />
   </ItemGroup>
@@ -739,6 +851,9 @@
       <Project>{407ec7d2-fd85-4ec9-86d2-d4d6c7c0bfd3}</Project>
       <Name>BlueSpiral.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RDLC\Invoice.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

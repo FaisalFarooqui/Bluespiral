@@ -1,0 +1,130 @@
+﻿@model BlueSpiral.Web.Areas.ShopOwner.Models.CashBackViewModel
+@{
+    ViewBag.Title = "CashBack";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
+<script src="~/Scripts/customizer/Menu.js"></script>
+
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Cash Back</h4>
+    <hr class="padding-bottom-1x">
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @using (Html.BeginForm("CashBack", "ControlPanel", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> From Date</label>
+
+                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date", @type = "text" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn"> To Date</label>
+                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To Date", @type = "date" })
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-md-6">
+                <div class="form-group">
+                    <label for="account-fn">Email Id</label>
+                    @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @placeholder = "Email Id" })
+                </div>
+            </div>*@
+
+        <div class="col-12 padding-bottom-1x">
+            <hr class="mt-2 mb-3">
+            <div class="text-right">
+                <button class="btn btn-primary margin-right-none" type="submit">Generate</button>
+            </div>
+        </div>
+    }
+</div>
+<div class="tabcontent">
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <h4>Cash Back History</h4>
+    <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+    <div class="table-responsive">
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example3" cellspacing="0" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Schedule</th>
+                    <th>EmailId</th>
+                    <th>TotalPurchase</th>
+                    <th>CashBackAmount</th>
+                    @*<th>Action</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.CashBack != null)
+                {
+                    foreach (var item in ViewBag.CashBack)
+                    {
+                        <tr>
+                            <td><a class="text-medium navi-link">@item.SrNo</a></td>
+                            <td>@item.FromDate - @item.ToDate</td>
+                            <td>@item.EmailId</td>
+                            <td>@item.TotalPurchase</td>
+                            <td>@item.CashBackAmount</td>
+                            @*<td>
+                                    <a href="/ControlPanel/ControlPanel/RemoveSubCategory/@item.HandicraftSubCategoryId">   <i class="fa fa-trash action-icon mr-1"></i> </a>
+
+                                    <i class="fa fa-edit action-icon mr-1"></i>
+
+                                </td>*@
+                            @*<td><a href="/ShopOwner/ShopOwner/RemoveCategory/@item.HandicraftCategoryId"><span aria-hidden="true">×</span></a></td>*@
+                        </tr>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Cash Back List</a></div>
+</div>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+
+
+@Scripts.Render("~/register/js");
+
+@if (ViewBag.GetDate != null)
+{
+<script>
+    GetLastScheduledDate();
+</script>
+        }
+    
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example3').DataTable(
+
+                {
+
+                    "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                    "iDisplayLength": 5
+                }
+            );
+        });
+
+
+        function checkAll(bx) {
+            var cbs = document.getElementsByTagName('input');
+            for (var i = 0; i < cbs.length; i++) {
+                if (cbs[i].type == 'checkbox') {
+                    cbs[i].checked = bx.checked;
+                }
+            }
+        }
+    </script>

@@ -1,0 +1,294 @@
+﻿
+@{
+    ViewBag.Title = "OrderList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="~/Scripts/customizer/Menu.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
+
+<div class="col-lg-12 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
+    <div id="order" class="tabcontent" style="display: block;">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <h4>Order</h4>
+        <hr class="padding-bottom-1x">
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <div class="table-responsive">
+            <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example1" cellspacing="0" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Order No.</th>
+                        @if (Session["UserTypeId"].ToString() == "1")
+                        {
+                            <th>Ordered By</th>
+                        }
+                        <th>Date Purchased</th>
+                        <th>Status</th>
+                        @if (Session["UserTypeId"].ToString() == "1")
+                        {
+                            <th>Total</th>
+                        }
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.OrderList != null)
+                    {
+                        foreach (var item in ViewBag.OrderList)
+                        {
+
+
+                    <tr>
+                        <td><a class="text-medium navi-link" href="#" onclick=" document.getElementById('id01').style.display = 'block';GetOrder('@item.OrdeNo');">@item.OrdeNo</a></td>
+                        @if (Session["UserTypeId"].ToString() == "1")
+                        {
+                            <td><a href="/ControlPanel/ControlPanel/getprofile?id=@item.EntryUser">@item.EntryUser</a></td>
+                        }
+                        <td>@item.DateOfPurchase</td>
+                        @*<td><span class="text-danger">@item.OrderStatus</span></td>*@
+                        <td>
+                            <select class="form-control ar-width" style="width: auto;" id="status" name="status" onchange="UpdateOrderStatus('@item.OrdeNo')">
+                                <option value="0">Select Status</option>
+                                @if (item.OrderStatus == "Pending")
+                                {
+                                    <option selected value="Pending">Pending</option>
+                                }
+                                else
+                                {
+                                    <option value="Pending">Pending</option>
+                                }
+                                @if (item.OrderStatus == "Accept")
+                                {
+                                    <option selected value="Accept">Accept</option>
+                                }
+                                else
+                                {
+                                    <option value="Accept">Accept</option>
+                                }
+                                @if (item.OrderStatus == "Reject")
+                                {
+                                    <option selected value="Reject">Reject</option>
+                                }
+                                else
+                                {
+                                    <option value="Reject">Reject</option>
+                                }
+                            </select>
+                        </td>
+                        @if (Session["UserTypeId"].ToString() == "1")
+                        {
+                            <td><span class="text-medium">Rs-@item.TotalAmount</span></td>
+                        }
+                       
+                        <td><a target="_blank" href="~/PrintInvoice.aspx?Order=@item.OrdeNo"><img style="height:60px;" src="~/Content/img/Print.png" /></a></td>
+                    </tr>
+                        }
+                    }
+                    @*<tr>
+                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">34VB5540K83</a></td>
+                        <td>July 21, 2017</td>
+                        <td><span class="text-info">In Progress</span></td>
+                        <td><span class="text-medium">Rs-315.20</span></td>
+                    </tr>
+                    <tr>
+                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">112P45A90V2</a></td>
+                        <td>June 15, 2017</td>
+                        <td><span class="text-warning">Delayed</span></td>
+                        <td><span class="text-medium">Rs-1,264.00</span></td>
+                    </tr>
+                    <tr>
+                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">28BA67U0981</a></td>
+                        <td>May 19, 2017</td>
+                        <td><span class="text-success">Delivered</span></td>
+                        <td><span class="text-medium">Rs-198.35</span></td>
+                    </tr>
+                    <tr>
+                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">502TR872W2</a></td>
+                        <td>April 04, 2017</td>
+                        <td><span class="text-success">Delivered</span></td>
+                        <td><span class="text-medium">Rs-2,133.90</span></td>
+                    </tr>
+                    <tr>
+                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">47H76G09F33</a></td>
+                        <td>March 30, 2017</td>
+                        <td><span class="text-success">Delivered</span></td>
+                        <td><span class="text-medium">Rs-86.40</span></td>
+                    </tr>*@
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="text-right"><a class="btn btn-link-primary margin-bottom-none" href="#"><i class="icon-download"></i>&nbsp;Order Details</a></div>
+    </div>
+</div>
+<!-- Open Ticket Modal-->
+@*<div class="modal fade" id="orderDetails" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Order No  - 34VB5540K83</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive shopping-cart mb-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th class="text-center">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Unionbay Park<small>x 1</small></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-43.90</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/02.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Daily Fabric Cap<small>x 2</small></a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-24.89</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/03.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Cole Haan Crossbody<small>x 1</small></a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-200.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
+                        <div class="px-2 py-1">Subtotal: <span class='text-medium'>Rs-289.68</span></div>
+                        <div class="px-2 py-1">Shipping: <span class='text-medium'>Rs-22.50</span></div>
+                        <div class="px-2 py-1">Tax: <span class='text-medium'>Rs-3.42</span></div>
+                        <div class="text-lg px-2 py-1">Total: <span class='text-medium'>Rs-315.60</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<div class="w3-container">
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:800px">
+
+            <div class="w3-center">
+                <br>
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close">&times;</span>
+            </div>
+
+            <div class="table-responsive shopping-cart mb-0 p-3">
+                <table class="table vender-tabs01">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th class="text-center">Order Type</th>
+                            @if (Session["UserTypeId"].ToString() == "1")
+                            {
+                                <th class="text-center">Order for</th>
+
+                            <th class="text-center">Subtotal</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody id="orderdetail">
+                        @*<tr>
+                        <td>
+                            <div class="product-item">
+                                <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
+                                <div class="product-info">
+                                    <h4 class="product-title"><a href="shop-single.html">Unionbay Park<small>x 1</small></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center text-lg text-medium">Rs-43.90</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-item">
+                                <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/02.jpg" alt="Product"></a>
+                                <div class="product-info">
+                                    <h4 class="product-title"><a href="shop-single.html">Daily Fabric Cap<small>x 2</small></a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center text-lg text-medium">Rs-24.89</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-item">
+                                <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/03.jpg" alt="Product"></a>
+                                <div class="product-info">
+                                    <h4 class="product-title"><a href="shop-single.html">Cole Haan Crossbody<small>x 1</small></a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center text-lg text-medium">Rs-200.00</td>
+                    </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            <hr class="mb-3">
+            @if (Session["UserTypeId"].ToString() == "1")
+            {
+                <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
+                    <div class="text-lg px-2 py-1">Total: <span class='text-medium' id="totprice"></span></div>
+                </div>
+            }
+
+
+            
+            </div>
+    </div>
+</div>
+<!-- Close Ticket Modal-->
+<input type="hidden" id="hdnSession" data-value="@Request.RequestContext.HttpContext.Session["UserTypeId"]" />
+
+
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example1').DataTable(
+
+            {
+
+                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "iDisplayLength": 5
+            }
+        );
+    });
+
+
+    function checkAll(bx) {
+        var cbs = document.getElementsByTagName('input');
+        for (var i = 0; i < cbs.length; i++) {
+            if (cbs[i].type == 'checkbox') {
+                cbs[i].checked = bx.checked;
+            }
+        }
+    }
+</script>

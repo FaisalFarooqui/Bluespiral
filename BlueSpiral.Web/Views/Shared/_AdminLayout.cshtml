@@ -15,6 +15,10 @@
     @*<link id="mainStyles" rel="stylesheet" media="screen" href="css/styles.min.css">*@
     @Styles.Render("~/Content/cssStyle")
     @*<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.min.css">*@
+    <link rel="stylesheet" media="screen" href="~/css/sweetalert2.css" />
+    <link rel="stylesheet" media="screen" href="~/css/flexslider-min.css" />
+
+
 
     <!-- Customizer Styles-->
     @*<link rel="stylesheet" media="screen" href="customizer/customizer.min.css">*@
@@ -52,9 +56,9 @@
         </form>
         <div class="site-branding">
             <div class="inner">
-                <!-- Off-Canvas Toggle(#shop-categories)--><a class="offcanvas-toggle cats-toggle" href="#shop-categories" data-toggle="offcanvas"></a>
+                <!-- Off-Canvas Toggle(#shop-categories)-->@*<a class="offcanvas-toggle cats-toggle" href="#shop-categories" data-toggle="offcanvas"></a>*@
                 <!-- Off-Canvas Toggle (#mobile-menu)--><a class="offcanvas-toggle menu-toggle" href="#mobile-menu" data-toggle="offcanvas"></a>
-                <!-- Site Logo--><a class="site-logo" href="index.html"><img src="../../Content/img/logo/logo-new.png" alt="TheBlueSpiral"></a>
+                <!-- Site Logo--><a class="site-logo" href="Welcome"><img src="../../../Content/img/logo/logo-new.png" alt="TheBlueSpiral"></a>
             </div>
         </div>
         <!-- Main Navigation-->
@@ -63,21 +67,26 @@
             <div class="inner">
                 <div class="tools">
                     <div class="search" style="display:none;"><i class="icon-search"></i></div>
-                    <div class="cart notify" style="display:none;">
-                        <a href="#"></a><i class="icon-bell"></i><span class="count">1</span>
+
+                    <div class="cart notify">
+                        <a href="#"></a><i class="icon-bell"></i><span class="count"> </span>
                         <div class="toolbar-dropdown notify-drop">
                             <h6> Notification</h6>
-                            <div class="dropdown-product-item">
-                                <span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src="../../Content/img/cart-dropdown/01.jpg" alt="Product"></a>
-                                <div class="dropdown-product-info">
-                                    <a class="dropdown-product-title" href="#">Unionbay Park</a>
-                                    <p class="para-deliver"> Your package containing MSTAR4 has been Delivered.Thanks for shopping !</p>
-                                </div>
+                            <div class="noti-content">
+                                <div class="noti-top-arrow"></div>
+                                <ul id="notiContent"></ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="account">
-                        <a href="#"></a><i class="icon-head"></i>
+                        <a href="#">
+                            <div class="user-ava">
+                                <img src="@Session["PhotoUrl"].ToString()" alt="name">
+                            </div>
+
+                        </a>
+
                         <ul class="toolbar-dropdown">
                             <li class="sub-menu-user">
                                 <div class="user-ava">
@@ -87,7 +96,6 @@
                                     <h6 class="text-dark">@Session["Name"].ToString()</h6>
                                 </div>
                             </li>
-
                             <li class="sub-menu-separator"></li>
                             <li> @Html.ActionLink("Logout", "Logout", "ControlPanel")</li>
                         </ul>
@@ -126,7 +134,7 @@
     <div class="offcanvas-wrapper">
         <!-- Page Content-->
 
-        <section class="col-sm-12" style="background: #f2edf3;">
+        <section class="col-sm-12" style="background: #f2edf3">
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-4 p-0">
                     <div class="tab-profile">
@@ -136,40 +144,52 @@
                         </div>
                         @if (Session["UserTypeId"].ToString() == "1")
                         {
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> @Html.ActionLink("Dashboard", "Welcome", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>  @Html.ActionLink("Supplier", "UserList/3", "ControlPanel", new { @class = "text-white", })  </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>   @Html.ActionLink("Shop Owner", "UserList/4", "ControlPanel", new { @class = "text-white", })  </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>  @Html.ActionLink("Defence", "UserList/5", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>@Html.ActionLink("Category Management", "Category", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>@Html.ActionLink("Sub Category Management", "SubCategory", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i>@Html.ActionLink("Product Management", "Product", "ControlPanel", new { @class = "text-white", })  </button>
-                            <button class="tablinks mb-4"><i class="icon-map pro-icon mr-2"></i>  @Html.ActionLink("Logout", "Logout", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Dashboard", "Welcome", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>  @Html.ActionLink("Supplier", "UserList/3", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>   @Html.ActionLink("Shop Owner", "UserList/4", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>  @Html.ActionLink("Defence", "UserList/5", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>@Html.ActionLink("Category Management", "Category", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>@Html.ActionLink("Sub Category Management", "SubCategory", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>@Html.ActionLink("Product Management", "Product", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Order", "OrderList/0", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Sample Order", "OrderList/1", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Cash Back", "CashBack", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Credit Cash Back", "creditwallet", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks mb-4"><i class="fa fa-map pro-icon mr-2"></i>  @Html.ActionLink("Logout", "Logout", "ControlPanel", new { @class = "text-white", })  </button>
                         }
                         else
                         {
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> @Html.ActionLink("Dashboard", "Welcome", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> @Html.ActionLink("Request Product", "Product", "ControlPanel", new { @class = "text-white", }) </button>
-                            <button class="tablinks"><i class="icon-map pro-icon mr-2"></i> Invetory Stock </button>
-                            <button class="tablinks mb-4"><i class="icon-map pro-icon mr-2"></i>  @Html.ActionLink("Logout", "Logout", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Dashboard", "Welcome", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i>  @Html.ActionLink("My Profile", "Profile", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Request Product", "Product", "ControlPanel", new { @class = "text-white", }) </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Order", "OrderList/0", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks"><i class="fa fa-map pro-icon mr-2"></i> @Html.ActionLink("Sample Order", "OrderList/1", "ControlPanel", new { @class = "text-white", })  </button>
+                            <button class="tablinks mb-4"><i class="fa fa-map pro-icon mr-2"></i>  @Html.ActionLink("Logout", "Logout", "ControlPanel", new { @class = "text-white", })  </button>
 
                         }
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
-                    <h4 class="mb-4">My Account</h4>
+                    <h4 class="mb-4"></h4>
                     @RenderBody()
-
-
 
                 </div>
             </div>
         </section>
+        @if (TempData["Message"] != null)
+        {
+            @*<script src="~/js/sweetalert2.all.min.js">*@
+            <script>
+            alert("@TempData["Message"]");
+            @*swal('Good job!', ("@TempData["Message"]"), 'success');*@
+            </script>
+        }
 
 
 
         <!-- Site Footer-->
         <section>
-            <img src="../../Content/img/footup.jpg" class="img-fluid">
+            <img src="../../../Content/img/footup.jpg" class="img-fluid">
         </section>
         <footer class="site-footer">
             <div class="container" style="padding-bottom: 30px;">
@@ -178,10 +198,10 @@
                         <!-- About Us-->
                         <section class="widget widget-links widget-light-skin">
                             <h3>
-                                <img src="../../Content/img/logo/logo-new.png" class="footer-log">
+                                <img src="../../../Content/img/logo/logo-new.png" class="footer-log">
                             </h3>
                             <p class="text-white text-justify">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                We desire to create a global reach for Indian art and handcrafts as we rigorously contribute towards skill development and encourage the craftsmen. We endeavor to support our artisans not just by promoting what they make but by helping them in redefining the craft.
                             </p>
                         </section>
                     </div>
@@ -190,11 +210,13 @@
                         <section class="widget widget-links widget-light-skin">
                             <h3 class="widget-title">Account &amp; Shipping Info</h3>
                             <ul>
-                                <li><a href="#"> Your Account</a></li>
-                                <li><a href="#"> Shipping Address</a></li>
-                                <li><a href="#"> Refunds & Replacements </a></li>
-                                <li><a href="#"> Delivery Info</a></li>
-                                <li><a href="#"> Help Center</a></li>
+                                <li><a href="Profile"> Your Account</a></li>
+                                <!--<li><a href="#">Address</a></li>-->
+                                <!--<li><a href="#"> Shipping Address</a></li>-->
+                                <!--<li><a href="#"> Refunds & Replacements </a></li>-->
+                                <li><a href="helpcenter#delivery"> Delivery Info</a></li>
+                                <li><a href="helpcenter">Help Center</a></li>
+                                <li><a href="contact">Contact Us</a></li>
                             </ul>
                         </section>
                     </div>
@@ -241,9 +263,20 @@
     <!-- Close Ticket Modal-->
     <!-- Open PAyment Modal-->
     <!-- Back To Top Button--><a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
+    <div class="col-sm-12">
+        <div id="sticky-social">
+            <ul>
+                <li>
+                    <a href="#" class="fa fa-whatsapp"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <!-- Backdrop-->
     <div class="site-backdrop"></div>
     <!-- JavaScript(jQuery) libraries, plugins and custom scripts-->
+    <script src="/js/vendor.min.js"></script>
+    <script src="/js/jquery.flexslider-min.js"></script>
     @*<script src="js/vendor.min.js"></script>
         <script src="js/scripts.min.js"></script>*@
     @Scripts.Render("~/bundles/javaScripts")
@@ -252,9 +285,12 @@
     @Scripts.Render("~/bundles/customizer")
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js'></script>
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script type="text/javascript">
         $(document).on('click', '.browse', function () {
-            alert('hi');
             var file = $(this).parent().parent().parent().find('.file');
             file.trigger('click');
         });
@@ -300,7 +336,13 @@
             }
         }
     </script>
-    
+
+    <script>
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: false
+        });
+    </script>
 
 </body>
 </html>

@@ -55,6 +55,7 @@ namespace BlueSpiral.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(UsersViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
@@ -65,7 +66,7 @@ namespace BlueSpiral.Web.Controllers
                     if (model.ImageFile != null)
                     {
                         //Use Namespace called :  System.IO  
-                         FileName = Path.GetFileNameWithoutExtension("~"+model.ImageFile.FileName);
+                        FileName = "PP";// Path.GetFileNameWithoutExtension("~"+model.ImageFile.FileName);
 
                         //To Get File Extension  
                         string FileExtension = Path.GetExtension(model.ImageFile.FileName);
@@ -77,22 +78,87 @@ namespace BlueSpiral.Web.Controllers
                         //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
 
                         //Its Create complete path to store in server.  
-                        model.ImagePath =Server.MapPath(UploadPath) + FileName;
+                        //model.ImagePath =Server.MapPath(UploadPath) + FileName;
 
                         //To copy and save file into server.  
-                        model.ImageFile.SaveAs(model.ImagePath);
+                        //model.ImageFile.SaveAs(model.ImagePath);
+
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.ImageFile.FileName);
+                        model.ImageFile.SaveAs(path);
+
+                        model.ImagePath = "../../../Uploads/" + model.ImageFile.FileName;
+
                     }
+                    if (model.panScanFile != null)
+                    {
+                        //Use Namespace called :  System.IO  
+                        FileName = "PAN";// Path.GetFileNameWithoutExtension("~" + model.panScanFile.FileName);
+
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(model.panScanFile.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                        //Get Upload path from Web.Config file AppSettings.  
+                        //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+
+                        //Its Create complete path to store in server.  
+                        ////model.PanScanPath = Server.MapPath(UploadPath) + FileName;
+
+                        //To copy and save file into server.  
+                        ////model.panScanFile.SaveAs(model.PanScanPath);
+
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.panScanFile.FileName);
+                        model.ImageFile.SaveAs(path);
+
+                        model.PanScanPath = "../../../Uploads/" + model.ImageFile.FileName;
+
+
+                    }
+
+                    if (model.gstScanFile != null)
+                    {
+                        //Use Namespace called :  System.IO  
+                        FileName = "GST";// Path.GetFileNameWithoutExtension("~" + model.gstScanFile.FileName);
+
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(model.gstScanFile.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                        //Get Upload path from Web.Config file AppSettings.  
+                        //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+
+                        ////Its Create complete path to store in server.  
+                        //model.GSTScanPath = Server.MapPath(UploadPath) + FileName;
+
+                        ////To copy and save file into server.  
+                        //model.gstScanFile.SaveAs(model.GSTScanPath);
+
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.gstScanFile.FileName);
+                        model.gstScanFile.SaveAs(path);
+
+                        model.GSTScanPath = "../../../Uploads/" + model.gstScanFile.FileName;
+                    }
+
+
+
 
                     model.CreatedOn = System.DateTime.Now;
                     model.UserTypeId = 4;
 
                     //encript password
                     model.Pswd = _Crypto.Encrypt(model.Pswd);
+                    model.VisibilityStatus = true;
+                    model.Status = false;
+                    
 
                     //auto map viewmodel to class
                     Mapper.CreateMap<UsersViewModel, TR_Users>();
                     var users = Mapper.Map<UsersViewModel, TR_Users>(model);
-
+                    users.Status = false;
                     //save user data in db
                     _Users.Add(users);
                     var userid = _Users.Save();
@@ -104,15 +170,15 @@ namespace BlueSpiral.Web.Controllers
 
                     // return RedirectToAction("Index", "Home");
 
-                    return RedirectToAction("Welcome", "ShopOwner", new { area = "ShopOwner", status = true });
+                    // return RedirectToAction("Welcome", "ShopOwner", new { area = "ShopOwner", status = true });
+                    TempData["Message"] = "Thank you.You can login once admin approves your registration.";
                 }
                 else
                 {
-                    
+                    TempData["Message"] = "You have already registered.Wait  for admin's approval for login.";
                 }
                 
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -137,9 +203,10 @@ namespace BlueSpiral.Web.Controllers
             if (ModelState.IsValid)
             {
                 var pswd = _Crypto.Encrypt(model.Password);
-                var user = _Users.Find(m => m.Email == model.Email && m.Pswd== pswd).ToList();
+                var user = _Users.Find(m => m.Email == model.Email && m.Pswd== pswd && m.Status == true).ToList();
+                var userr = _Users.Find(m => m.Email == model.Email && m.Pswd == pswd && m.Status == false).ToList();
 
-                if (user.Count()> 0)
+                if (user.Count() > 0)
                 {
                     int UserTypeId = user.Select(m => m.UserTypeId).FirstOrDefault();
                     Session["UserEmail"] = model.Email;
@@ -159,11 +226,19 @@ namespace BlueSpiral.Web.Controllers
                     {
                         return RedirectToAction("Index2", "ShopOwner", new { area = "ShopOwner", status = true });
                     }
-                   
+
 
                 }
-                else
+                else if (userr.Count() > 0)
+                {
+                    TempData["Message"] = "Your ID has not been activated yet.";
                     return View(model);
+                }
+                else
+                {
+                    TempData["Message"] = "Wrong ID or password.";
+
+                }
             }
             return View();
             // This doesn't count login failures towards account lockout
@@ -311,7 +386,7 @@ namespace BlueSpiral.Web.Controllers
             msg.Subject = "Vendor Application : The Blue Spriral";
             string htmlimagedesign = "Dear " + Name + ",<br/><br/> THE BLUE SPIRAL WELCOMES YOU <br/><br/>";
             htmlimagedesign += "Our Customer Repesentative will contact you soon.<br/>";
-            htmlimagedesign += "Thanks for the intrest ;<br/><br/>";
+            htmlimagedesign += "Thanks for your intrest ;<br/><br/>";
             htmlimagedesign += "Regards,<br/>THE BLUE SPIRAL TEAM.";
             
             msg.Body = htmlimagedesign;
@@ -357,7 +432,7 @@ namespace BlueSpiral.Web.Controllers
                     if (model.ImageFile != null)
                     {
                         //Use Namespace called :  System.IO  
-                        FileName = Path.GetFileNameWithoutExtension("~" + model.ImageFile.FileName);
+                        FileName = "VPP"; //Path.GetFileNameWithoutExtension("~" + model.ImageFile.FileName);
 
                         //To Get File Extension  
                         string FileExtension = Path.GetExtension(model.ImageFile.FileName);
@@ -368,12 +443,95 @@ namespace BlueSpiral.Web.Controllers
                         //Get Upload path from Web.Config file AppSettings.  
                         //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
 
-                        //Its Create complete path to store in server.  
-                        model.ImagePath = Server.MapPath(UploadPath) + FileName;
+                        ////Its Create complete path to store in server.  
+                        //model.ImagePath = Server.MapPath(UploadPath) + FileName;
 
-                        //To copy and save file into server.  
-                        model.ImageFile.SaveAs(model.ImagePath);
+                        ////To copy and save file into server.  
+                        //model.ImageFile.SaveAs(model.ImagePath);
+
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.ImageFile.FileName);
+                        model.ImageFile.SaveAs(path);
+
+                        model.ImagePath = "../../../Uploads/" + model.ImageFile.FileName;
+
                     }
+                    if (model.panScanFile != null)
+                    {
+                        //Use Namespace called :  System.IO  
+                        FileName = "VPAN";//Path.GetFileNameWithoutExtension("~" + model.panScanFile.FileName);
+
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(model.panScanFile.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                        //Get Upload path from Web.Config file AppSettings.  
+                        //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+
+                        ////Its Create complete path to store in server.  
+                        //model.PanScanPath = Server.MapPath(UploadPath) + FileName;
+
+                        ////To copy and save file into server.  
+                        //model.panScanFile.SaveAs(model.PanScanPath);
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.panScanFile.FileName);
+                        model.panScanFile.SaveAs(path);
+
+                        model.PanScanPath = "../../../Uploads/" + model.panScanFile.FileName;
+                    }
+
+                    if (model.gstScanFile != null)
+                    {
+                        //Use Namespace called :  System.IO  
+                        FileName = "VGST";// Path.GetFileNameWithoutExtension("~" + model.gstScanFile.FileName);
+
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(model.gstScanFile.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                        //Get Upload path from Web.Config file AppSettings.  
+                        //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+
+                        ////Its Create complete path to store in server.  
+                        //model.GSTScanPath = Server.MapPath(UploadPath) + FileName;
+
+                        ////To copy and save file into server.  
+                        //model.gstScanFile.SaveAs(model.GSTScanPath);
+
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.gstScanFile.FileName);
+                        model.gstScanFile.SaveAs(path);
+
+                        model.GSTScanPath = "../../../Uploads/" + model.gstScanFile.FileName;
+                    }
+
+                    if (model.cancelledChqScanFile != null)
+                    {
+                        //Use Namespace called :  System.IO  
+                        FileName = "CANCHQ";// Path.GetFileNameWithoutExtension("~" + model.cancelledChqScanFile.FileName);
+
+                        //To Get File Extension  
+                        string FileExtension = Path.GetExtension(model.cancelledChqScanFile.FileName);
+
+                        //Add Current Date To Attached File Name  
+                        FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                        //Get Upload path from Web.Config file AppSettings.  
+                        //string UploadPath = ConfigurationManager.AppSettings["UserImagePath"].ToString();
+
+                        ////Its Create complete path to store in server.  
+                        //model.CanChqPath = Server.MapPath(UploadPath) + FileName;
+
+                        ////To copy and save file into server.  
+                        //model.cancelledChqScanFile.SaveAs(model.CanChqPath);
+                        var path = Path.Combine(Server.MapPath("~/Uploads"), model.cancelledChqScanFile.FileName);
+                        model.cancelledChqScanFile.SaveAs(path);
+
+                        model.CanChqPath = "../../../Uploads/" + model.cancelledChqScanFile.FileName;
+                    }
+
+
 
                     model.CreatedOn = System.DateTime.Now;
                     model.UserTypeId = 3;

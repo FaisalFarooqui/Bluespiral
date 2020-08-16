@@ -1,21 +1,21 @@
-﻿
-@model BlueSpiral.Core.ViewModel.UsersViewModel
+﻿@model BlueSpiral.Core.ViewModel.UsersViewModel
 @{
     ViewBag.Title = "SupplierList";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
 }
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.min.css">
 <div id="order" class="tabcontent">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     @*<h4>Register User</h4>*@
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
     <div class="table-responsive">
-        <table class="table table-hover margin-bottom-none">
+        <table class="table table-hover margin-bottom-none table-striped table-bordered" id="example5" cellspacing="0" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -33,7 +33,7 @@
                     {
                         <tr>
                             <td>@item.FName</td>
-                            <td>@item.Email</td>
+                            <td ><a href="/ControlPanel/ControlPanel/getprofile?id=@item.Email">@item.Email</a></td>
                             <td><span class="text-danger">@item.ContactNo</span></td>
                             <td><span class="text-medium">@item.BusinessName</span></td>
                             <td><a class="btn btn-primary btn-sm" href="/ControlPanel/ControlPanel/UpdateStatus/@item.Userid"><span>@item.Status</span></a></td>
@@ -41,9 +41,12 @@
                                 <a href="/ControlPanel/ControlPanel/RemoveUser/@item.Userid"><i class="fa fa-trash action-icon mr-1"></i></a>
                                 <a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#opendetail">
 
-                                    <i class="fa fa-edit action-icon mr-1"></i>
+                                    <a href="/ControlPanel/ControlPanel/Profile?id=@item.Email"><i class="fa fa-edit action-icon mr-1"></i></a>
                                 </a>
-                                <i class="fa fa-shopping-basket action-icon action-icon" aria-hidden="true"></i>
+                                @if (item.UserTypeId == 3)
+                                {
+                                    <a href="/ControlPanel/ControlPanel/Product?id=@item.Email"><i class="fa fa-shopping-basket action-icon action-icon" aria-hidden="true"></i></a>
+                                }
                             </td>
                         </tr>
                     }
@@ -59,7 +62,7 @@
 </div>
 
 @Html.ValidationSummary("", new { @class = "text-danger" })
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "row", role = "form", @id = "buyer", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("UserList/5", "ControlPanel", FormMethod.Post, new { @class = "row", role = "form", @id = "buyer", enctype = "multipart/form-data" }))
 {
     <div class="w3-container">
 
@@ -71,13 +74,20 @@
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close">&times;</span>
                 </div>
 
-               
+
 
                 <div class="col-sm-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.FName)
                         @Html.TextBoxFor(m => m.FName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.FName, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Regiment)
+                        @Html.TextBoxFor(m => m.Regiment, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Regiment, null, new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -193,3 +203,30 @@
 }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example5').DataTable(
+
+            {
+
+                "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                "iDisplayLength": 5
+            }
+        );
+    });
+
+
+    function checkAll(bx) {
+        var cbs = document.getElementsByTagName('input');
+        for (var i = 0; i < cbs.length; i++) {
+            if (cbs[i].type == 'checkbox') {
+                cbs[i].checked = bx.checked;
+            }
+        }
+    }
+</script>
+
+
+@Scripts.Render("~/register/js");

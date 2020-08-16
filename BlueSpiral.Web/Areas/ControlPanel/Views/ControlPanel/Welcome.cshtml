@@ -5,22 +5,204 @@
 }
 <div id="dashboard" class="tabcontent">
     <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-    <h4>Welcome</h4>
-    <hr class="padding-bottom-1x">
     <div class="col-sm-12">
-        <div class="row">
+        <h5 class="new-collection how-work text-center mb-0">
+            <!--<img src="../../../uploads/decore-right.png" alt="decore" class="media-rite">-->
+            Welcome to the Family
 
-            <div class="col-sm-12 mb-4">
-                <div class="card p-1" style="background: #f2edf3;">
-                    <div class="card-body crd-img">
-                        <img src="../../Content/img/decore-right.png" alt="decore" class="deco-rite">
-                        <p class="deliver-hit">
-                            Congratulation...!!.. Hello Administrator , Welcome to the control panel of The Blue Spiral.
+            <!--<img src="../../../uploads/decore-right.png" alt="decore" class=" media-left">-->
+        </h5>
+        <h5 class="new-collection how-work text-center"> " You focus on your art and rest leave it on us."</h5>
+        <div class="row m-0">
+            <div class="col-md-6 mt-4">
+                <h4 class="tabb-dash divider-titl mb-3">List Products</h4>
+                <p class="text-justify">
+                    You can go to Request Product page and add the product by clicking on Add new Product at the right bottom (Page link) or, you can contact us; our team will help you to list your products on TBS.
+                </p>
+            </div>
+            <div class="col-md-6 mt-4">
+                <h4 class="tabb-dash divider-titl mb-3">Start Receiving Orders</h4>
+                <p class="text-justify">
+                    As your products go Live on the app, you will start receiving orders.
+                </p>
+            </div>
+            <div class="col-md-6 mt-3">
+                <h4 class="tabb-dash divider-titl mb-3">Delivery Handled</h4>
+                <p class="text-justify">
+                    We offer quick and convenient pick-up and delivery across India through our logistics partners! All you need to do is pack the product .
+                </p>
+            </div>
+            <div class="col-md-6 mt-3">
+                <h4 class="tabb-dash divider-titl mb-3">Receive Earnings</h4>
+                <p class="text-justify">
+                    Payments are directly deposited to your bank account within 7 days of picking up the orders.
+                </p>
+            </div>
+        </div>
 
-                        </p>
+        <div class="row m-0">
+            <div class="col-lg-6 col-md-12  mb-3">
+                <h4 class="mt-3 mb-3" style="color: #9b9c9d;">
+                    No. of order Placed
+                    <label class="text-primary pull-right">12</label>
+                </h4>
+                <div id="chartContainer" style="height: 250px; width: 100%;"></div>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-3">
+                <h4 class="mt-3 mb-3" style="color: #9b9c9d;">
+                    Total Purchase in the month
+                    <label class="text-primary pull-right">100</label>
+                </h4>
+                <div id="chartContainermonth" style="height: 250px; width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="row mt-4 ">
+            <div class="col-lg-6 col-sm-12 mb-3">
+                <div class="card card-widget">
+                    <div class="card-body" style="background:#fff ">
+                        <h5 class="text-primary">Order Overview </h5>
+                        <div class="col-sm-12">
+                            <canvas id="chart-line" height="250" class="chartjs-render-monitor" style="display: block;"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 mb-3">
+                <div class="card card-widget">
+                    <div class="card-body" style="background:#fff ">
+                        <h5 class="text-primary">Order Overview </h5>
+                        <span>Total Revenue</span>
+                        <div class="mt-2">
+                            <h4>30</h4>
+                            <h6>Online Order <span class="pull-right">30%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-primary" style="width: 30%;" role="progressbar">
+                                    <span class="sr-only">30% Order</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <h4>50</h4>
+                            <h6 class="m-t-10 text-muted">Offline Order <span class="pull-right">50%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-success" style="width: 50%;" role="progressbar">
+                                    <span class="sr-only">50% Order</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <h4>20</h4>
+                            <h6 class="m-t-10 text-muted">Cash On Develery <span class="pull-right">20%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-warning" style="width: 20%;" role="progressbar">
+                                    <span class="sr-only">20% Order</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-12 mb-3 track-fnt text-primary">
+                <b>Orders</b>
+            </div>
+            <div class="col-sm-12">
+                <a class="btn btn-primary btn-sm" href="OrderList">
+                    <span>YOUR ORDERS</span>
+                </a>
+
+            </div>
+        </div>
+        <div class="padding-top-1x text-right">
+            <a class="btn btn-outline-secondary btn-sm mod-btn text-white" href="front.html">
+                <i class="icon-arrow-left"></i> Back&nbsp;
+            </a>
+        </div>
     </div>
+
+
 </div>
+
+
+<script>
+    window.onload = function () {
+        var options = {
+            title: {
+                text: ""
+            },
+            data: [
+                {
+                    type: "column",
+                    dataPoints: [
+                        { label: "jan", y: 10 },
+                        { label: "feb", y: 15 },
+                        { label: "march", y: 25 },
+                        { label: "april", y: 30 },
+                        { label: "may", y: 2 },
+                        { label: "june", y: 5 },
+                        { label: "july", y: 8 },
+                        { label: "aug", y: 11 },
+                        { label: "sep", y: 25 },
+                        { label: "oct", y: 8 },
+                        { label: "nov", y: 6 },
+                        { label: "dec", y: 3 },
+                    ]
+                }
+            ]
+        };
+
+        $("#chartContainer").CanvasJSChart(options);
+
+        var optionsmonth = {
+            title: {
+                text: ""
+            },
+            data: [
+                {
+                    type: "column",
+                    dataPoints: [
+                        { label: "jan", y: 5 },
+                        { label: "feb", y: 1 },
+                        { label: "march", y: 2 },
+                        { label: "april", y: 30 },
+                        { label: "may", y: 21 },
+                        { label: "june", y: 5 },
+                        { label: "july", y: 8 },
+                        { label: "aug", y: 6 },
+                        { label: "sep", y: 1 },
+                        { label: "oct", y: 12 },
+                        { label: "nov", y: 6 },
+                        { label: "dec", y: 3 }
+                    ]
+                }
+            ]
+        };
+
+        $("#chartContainermonth").CanvasJSChart(optionsmonth);
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        var ctx = $("#chart-line");
+        var myLineChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Order Cancled", "Order Completed", "Order Pending"],
+                datasets: [{
+                    data: [1200, 1700, 800],
+                    backgroundColor: ["rgba(255, 0, 0, 0.5)", "#60c1ee", "#3ec7b5"]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+    });
+</script>

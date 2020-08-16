@@ -154,6 +154,43 @@
                             @Html.ValidationMessageFor(model => model.ManufacturerORWholesaler, null, new { @class = "text-danger" })
                         </div>
                     </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Pan scan copy</label>
+                            <input type="file" name="panScanFile" class="file" required />
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                                <span class="input-group-btn">
+                                    <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>GST scan copy</label>
+                            <input type="file" name="gstScanFile" class="file" required />
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                                <span class="input-group-btn">
+                                    <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Cancelled cheque scan copy</label>
+                            <input type="file" name="cancelledChqScanFile" class="file" required />
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                                <span class="input-group-btn">
+                                    <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-12">
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="custom-control custom-checkbox">

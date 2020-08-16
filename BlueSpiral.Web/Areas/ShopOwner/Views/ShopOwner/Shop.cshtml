@@ -4,45 +4,30 @@
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<div class="offcanvas-wrapper">
+<div class="col-sm-12 p-0" style="background: #fff;">
 
     <section class="">
         <div class="flexslider left">
-
-            <div class="flex-viewport" style="overflow: hidden; position: relative;">
-                <ul class="slides" style="width: 1000%; transition-duration: 0.6s; transform: translate3d(-4047px, 0px, 0px);">
-                    <li class="clone" aria-hidden="true" style="width: 1349px; float: left; display: block;">
-                        <img src="/Content/img/shop/slider-element-3.jpg" class="respo-im" draggable="false">
-                        <div class="meta">
-                            <h1><img src="/Content/img/shop/uppershop3.png" class="img-fluid" draggable="false"></h1>
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="">
-                        <img src="/Content/img/shop/slider-01-01.jpg" class="respo-im" draggable="false">
-                        <div class="meta">
-                            <h1><img src="/Content/img/shop/uppershop.png" class="img-fluid" draggable="false"></h1>
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="">
-                        <img src="/Content/img/shop/slider-element-1.jpg" class="respo-im" draggable="false">
-                        <div class="meta">
-                            <h1><img src="/Content/img/shop/uppershop2.png" class="img-fluid" draggable="false"></h1>
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="flex-active-slide">
-                        <img src="/Content/img/shop/slider-element-3.jpg" class="respo-im" draggable="false">
-                        <div class="meta">
-                            <h1><img src="/Content/img/shop/uppershop3.png" class="img-fluid" draggable="false"></h1>
-                        </div>
-                    </li>
-                    <li style="width: 1349px; float: left; display: block;" class="clone" aria-hidden="true">
-                        <img src="/Content/img/shop/slider-01-01.jpg" class="respo-im" draggable="false">
-                        <div class="meta">
-                            <h1><img src="/Content/img/shop/uppershop.png" class="img-fluid" draggable="false"></h1>
-                        </div>
-                    </li>
-                </ul>
-            </div><ul class="flex-direction-nav"><li><a class="flex-prev" href="#">Previous</a></li><li><a class="flex-next" href="#">Next</a></li></ul>
+            <ul class="slides">
+                <li>
+                    <img src="/Content/img/shop/slider-01-01.jpg" class="respo-im">
+                    <div class="meta">
+                        <h1><img src="/Content/img/shop/uppershop.png" class="img-fluid"></h1>
+                    </div>
+                </li>
+                <li>
+                    <img src="/Content/img/shop/slider-element-1.jpg" class="respo-im">
+                    <div class="meta">
+                        <h1><img src="/Content/img/shop/uppershop2.png" class="img-fluid"></h1>
+                    </div>
+                </li>
+                <li>
+                    <img src="/Content/img/shop/slider-element-3.jpg" class="respo-im">
+                    <div class="meta">
+                        <h1><img src="/Content/img/shop/uppershop3.png" class="img-fluid"></h1>
+                    </div>
+                </li>
+            </ul>
         </div>
     </section>
     <!-- Page Content-->
@@ -104,26 +89,36 @@
                                 {
                                
                     <div class="grid-item" style="position: absolute; left: 0px; top: 0px;">
-                            <div class="product-card">
-                                <div class="product-badge text-danger">@item.discount Off</div><a class="product-thumb" href="../SingleProduct/@item.product_id"><img src=@item.ImgUrl alt="Product"></a>
-                                <h3 class="product-title"><a href="../SingleProduct/@item.product_id">@item.product_name</a></h3>
-                                <h4 class="product-price">
-                                    @if (Session["UserTypeId"].ToString() == "4")
-                                    {
-                                        <del>Rs-99.99</del>@item.price_shopkeeper
-                                                                    }
+                        <div class="product-card">
+                            <div class="product-badge text-danger">Rs. @item.discount Off</div><a class="product-thumb" href="../SingleProduct/@item.product_id"><img alt="Product" src=@item.ImgUrl></a>
+                            <h3 class="product-title"><a href="../SingleProduct/@item.product_id">@item.product_name</a></h3>
+                            <h4 class="product-price">
+                                @if (Session["UserTypeId"].ToString() == "4")
+                                {
+                                    <del class="text-muted text-normal">Rs. @item.TotAmountShopkeeper</del> @item.price_shopkeeper
+                                }
 
-                                    else
-                                    {
-                                        <del>Rs-99.99</del>@item.price_defence
-                            }
-                                 
-                                </h4>
+                                else
+                                {
+                                    <del class="text-muted text-normal">Rs. @item.TotDefence</del> @item.price_defence
+                                }
+
+                            </h4>
+                            @if (Session["UserTypeId"].ToString() == "4")
+                            {
                                 <div class="product-buttons">
                                     <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Whishlist"><i class="icon-heart"></i></button>
-                                    <button class="btn btn-outline-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+                                    <button class="btn btn-outline-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!" onclick="addtocart('Normal','@item.moq_shopkeeper','@item.product_id');">Add to Cart</button>
                                 </div>
-                            </div>
+                            }
+                            @if (Session["UserTypeId"].ToString() == "5")
+                            {
+                                <div class="product-buttons">
+                                    <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="" data-original-title="Whishlist"><i class="icon-heart"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm" data-toast="" data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!" onclick="addtocart('Normal','@item.moq_defence','@item.product_id');">Add to Cart</button>
+                                </div>
+                            }
+                        </div>
                         </div>
 
                         }
@@ -270,7 +265,7 @@
         </div>*@
                     </div>
                 <!-- Pagination-->
-                <nav class="pagination">
+                @*<nav class="pagination">
                     <div class="column">
                         <ul class="pages">
                             <li class="active"><a href="#">1</a></li>
@@ -286,7 +281,7 @@
                             <i class="icon-arrow-left"></i> Back&nbsp;
                         </a>
                     </div>
-                </nav>
+                </nav>*@
             </div>
             <!-- Sidebar          -->
             <div class="col-xl-3 col-lg-4 order-lg-1">
@@ -366,7 +361,7 @@
                             </li>
                         </ul>
                     </section>
-                    <!-- Widget Price Range-->
+                    @*<!-- Widget Price Range-->
                     <section class="widget widget-categories">
                         <h3 class="widget-title">Price Range</h3>
                         <form class="price-range-slider" method="post" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
@@ -433,7 +428,7 @@
                             <input class="custom-control-input" type="checkbox" id="s">
                             <label class="custom-control-label" for="s">S&nbsp;<span class="text-muted">(213)</span></label>
                         </div>
-                    </section>
+                    </section>*@
                     <!-- Promo Banner-->
                     <section class="promo-box" style="background-image: url(/Content/img/banners/02.jpg);">
                         <!-- Choose between .overlay-dark (#000) or .overlay-light (#fff) with default opacity of 50%. You can overrride default color and opacity values via 'style' attribute.--><span class="overlay-dark" style="opacity: .45;"></span>

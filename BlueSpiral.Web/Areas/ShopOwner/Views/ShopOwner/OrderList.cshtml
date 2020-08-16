@@ -3,7 +3,10 @@
     ViewBag.Title = "OrderList";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+<script src="~/Scripts/customizer/Menu.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="col-lg-9 col-md-8 col-sm-8 pt-4 pr-4 pl-4 pb-5">
     <div id="order" class="tabcontent" style="display: block;">
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
@@ -24,9 +27,12 @@
                     {
                         foreach (var item in ViewBag.OrderList)
                         {
+                            
+
                     <tr>
-                        <td><a class="text-medium navi-link" href="#" data-toggle="modal" data-target="#orderDetails">@item.OrdeNo</a></td>
                        
+                        <td><a class="text-medium navi-link" href="#" onclick=" document.getElementById('id01').style.display = 'block';GetOrder('@item.OrdeNo');">@item.OrdeNo</a></td>
+
                         <td>@item.DateOfPurchase</td>
                         <td><span class="text-danger">@item.OrderStatus</span></td>
                         <td><span class="text-medium">Rs-@item.TotalAmount</span></td>
@@ -71,24 +77,92 @@
     </div>
 </div>
 <!-- Open Ticket Modal-->
-<div class="modal fade" id="orderDetails" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Order No  - 34VB5540K83</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+@*<div class="modal fade" id="orderDetails" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Order No  - 34VB5540K83</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive shopping-cart mb-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th class="text-center">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Unionbay Park<small>x 1</small></a></h4><span><em>Size:</em> 10.5</span><span><em>Color:</em> Dark Blue</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-43.90</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/02.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Daily Fabric Cap<small>x 2</small></a></h4><span><em>Size:</em> XL</span><span><em>Color:</em> Black</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-24.89</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-item">
+                                            <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/03.jpg" alt="Product"></a>
+                                            <div class="product-info">
+                                                <h4 class="product-title"><a href="shop-single.html">Cole Haan Crossbody<small>x 1</small></a></h4><span><em>Size:</em> -</span><span><em>Color:</em> Turquoise</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center text-lg text-medium">Rs-200.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
+                        <div class="px-2 py-1">Subtotal: <span class='text-medium'>Rs-289.68</span></div>
+                        <div class="px-2 py-1">Shipping: <span class='text-medium'>Rs-22.50</span></div>
+                        <div class="px-2 py-1">Tax: <span class='text-medium'>Rs-3.42</span></div>
+                        <div class="text-lg px-2 py-1">Total: <span class='text-medium'>Rs-315.60</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
+        </div>
+    </div>*@
+
+    <div class="w3-container">
+
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+                <div class="w3-center">
+                    <br>
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close">&times;</span>
+                </div>
+
                 <div class="table-responsive shopping-cart mb-0">
-                    <table class="table">
+                    <table class="table" style="margin-top: 30px;">
                         <thead>
                             <tr>
                                 <th>Product Name</th>
+                                <th class="text-center">Order Type</th>
                                 <th class="text-center">Subtotal</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody id="orderdetail">
+                            @*<tr>
                                 <td>
                                     <div class="product-item">
                                         <a class="product-thumb" href="shop-single.html"><img src="img/shop/cart/01.jpg" alt="Product"></a>
@@ -120,19 +194,27 @@
                                     </div>
                                 </td>
                                 <td class="text-center text-lg text-medium">Rs-200.00</td>
-                            </tr>
+                            </tr>*@
                         </tbody>
                     </table>
                 </div>
                 <hr class="mb-3">
                 <div class="d-flex flex-wrap justify-content-between align-items-center pb-2">
-                    <div class="px-2 py-1">Subtotal: <span class='text-medium'>Rs-289.68</span></div>
+                    @*<div class="px-2 py-1">Subtotal: <span class='text-medium'>Rs-289.68</span></div>
                     <div class="px-2 py-1">Shipping: <span class='text-medium'>Rs-22.50</span></div>
-                    <div class="px-2 py-1">Tax: <span class='text-medium'>Rs-3.42</span></div>
-                    <div class="text-lg px-2 py-1">Total: <span class='text-medium'>Rs-315.60</span></div>
+                    <div class="px-2 py-1">Tax: <span class='text-medium'>Rs-3.42</span></div>*@
+                    <div class="text-lg px-2 py-1">Total: <span class='text-medium' id="totprice"></span></div>
                 </div>
+
+
+
+                <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                    @*<button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>*@
+
+                </div>
+
             </div>
         </div>
     </div>
-</div>
+
 <!-- Close Ticket Modal-->

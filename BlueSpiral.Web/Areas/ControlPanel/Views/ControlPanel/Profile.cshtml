@@ -1,0 +1,209 @@
+﻿@model BlueSpiral.Core.ViewModel.UsersViewModel
+
+@*@model BlueSpiral.Web.Areas.ControlPanel.Models.UpdateProfileViewModel*@
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*<script src="~/Scripts/customizer/Menu.js"></script>*@
+<script src="~/Scripts/RegisterJs/register.js"></script>
+
+<div class="col-lg-12 col-md-8 col-sm-8 p-0">
+    <div id="myprofile" class="tabcontent" style="display: block;">
+        <input type="hidden" id="hdnCityId" />
+        <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+        <h4>Profile</h4>
+        <hr class="padding-bottom-1x">
+        @using (Html.BeginForm("Profile", "ControlPanel", FormMethod.Post, new { role = "form", @class = "row p-1", enctype = "multipart/form-data" }))
+        {
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FName)
+                    @Html.TextBoxFor(m => m.FName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @onblur = "checkEmail()", @id = "emailid" })
+                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ContactNo)
+                    @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.ContactNo, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BusinessName)
+                    @Html.TextBoxFor(m => m.BusinessName, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.BusinessName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ContactAddress)
+                    @Html.TextBoxFor(m => m.ContactAddress, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.ContactAddress, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>State</label>
+                    @Html.DropDownListFor(m => m.StateId, ViewBag.State as SelectList, "Choose State", new { @class = "form-control", @id = "StateId", @onchange = "StateWiseCity()" })
+                    @Html.ValidationMessageFor(model => model.StateId, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>City</label>
+                    @Html.DropDownListFor(m => m.CityId, new SelectList(Enumerable.Empty<SelectListItem>(), "CityId", "CityName"), "Choose City", new { @class = "form-control", @id = "City" })
+                    @Html.ValidationMessageFor(model => model.CityId, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pincode)
+                    @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.Pincode, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Handicraft Category</label>
+                    @Html.DropDownListFor(m => m.HandicraftCategoryId, ViewBag.HandicraftCategory as SelectList, "Choose Handicraft Category", new { @class = "form-control", @id = "HandicraftCategoryId" })
+                    @Html.ValidationMessageFor(model => model.HandicraftCategoryId, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Bank Name</label>
+                    @Html.DropDownListFor(m => m.BankName, ViewBag.BankName as SelectList, "Choose Bank Name", new { @class = "form-control", @id = "BankName" })
+                    @Html.ValidationMessageFor(model => model.BankName, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Account Number</label>
+                    @Html.TextBoxFor(m => m.BankAccountNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BankAccountNumber, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>IFSC</label>
+                    @Html.TextBoxFor(m => m.IFSCCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IFSCCode, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GSTNo)
+                    @Html.TextBoxFor(m => m.GSTNo, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.GSTNo, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PanNo)
+                    @Html.TextBoxFor(m => m.PanNo, new { @class = "form-control", @type = "text" })
+                    @Html.ValidationMessageFor(model => model.PanNo, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pswd)
+                    @Html.TextBoxFor(m => m.Pswd, new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessageFor(model => model.Pswd, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @type = "password", @onblur = "ValidatePswd()" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <input type="file" name="ImageFile" class="file" />
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Are you a Manufacturer/Wholesaler?</label>
+                    Manufacturer
+                    @Html.RadioButtonFor(model => model.ManufacturerORWholesaler, "Manufacturer")
+                    Wholesaler
+                    @Html.RadioButtonFor(model => model.ManufacturerORWholesaler, "Wholesaler")
+                    @Html.ValidationMessageFor(model => model.ManufacturerORWholesaler, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Pan scan copy</label>
+                    <input type="file" name="panScanFile" class="file" />
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>GST scan copy</label>
+                    <input type="file" name="gstScanFile" class="file" />
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Cancelled cheque scan copy</label>
+                    <input type="file" name="cancelledChqScanFile" class="file" />
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control input-lg new-control" disabled="" placeholder="" style="background: #fff;">
+                        <span class="input-group-btn">
+                            <button class="browse btn btn-primary input-lg browse-edit mt-1" type="button">Browse</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <input class="btn btn-primary margin-bottom-none mod-btn" type="submit" value="Update" />
+            </div>
+        }
+
+    </div>
+
+</div>
+
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        $("#hdnCityId").val(@ViewBag.JavaScriptFunction);
+        StateWiseCity();
+    </script>
+}
